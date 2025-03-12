@@ -1,5 +1,6 @@
 package com.ruoxijun.controller;
 
+import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.Article;
 import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
@@ -21,6 +22,11 @@ public class ArticleController {
         List<Article> list = articleService.list();
         System.out.println(list);
         return list;
+    }
+
+    @GetMapping("/hotArticleList")
+    public R<List<Article>> hotArticleList(){
+        return R.ok(articleService.hotArticleList());
     }
 
 }
