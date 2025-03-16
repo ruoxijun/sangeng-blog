@@ -2,6 +2,7 @@ package com.ruoxijun.service;
 
 import com.ruoxijun.domain.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoxijun.domain.vo.HotArticleVo;
 
 import java.util.List;
 
@@ -12,6 +13,6 @@ import java.util.List;
 */
 public interface ArticleService extends IService<Article> {
 
-    List<Article> hotArticleList();
+    List<HotArticleVo> hotArticleList();
 
 }

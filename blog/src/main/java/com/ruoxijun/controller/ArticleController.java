@@ -2,6 +2,7 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.Article;
+import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,7 @@ public class ArticleController {
     }
 
     @GetMapping("/hotArticleList")
-    public R<List<Article>> hotArticleList(){
+    public R<List<HotArticleVo>> hotArticleList(){
         return R.ok(articleService.hotArticleList());
     }
 
