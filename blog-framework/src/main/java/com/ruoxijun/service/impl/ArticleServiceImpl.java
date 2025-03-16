@@ -8,6 +8,7 @@ import com.ruoxijun.domain.entity.Article;
 import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.service.ArticleService;
 import com.ruoxijun.mapper.ArticleMapper;
+import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Page<Article> page = new Page<>(
                 SystemConstants.ARTICLE_HOT_PAGE_CURRENT, SystemConstants.ARTICLE_HOT_PAGE_SIZE);
         List<Article> records = this.page(page, queryWrapper).getRecords();
-        return records.stream().map(article -> {
-            HotArticleVo hotArticleVo = new HotArticleVo();
-            BeanUtils.copyProperties(article, hotArticleVo);
-            return hotArticleVo;
-        }).toList();
+        return BeanCopyUtils.copyBeanList(records, HotArticleVo.class);
     }
 }
 
