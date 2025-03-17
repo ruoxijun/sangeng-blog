@@ -8,18 +8,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HotArticleVo {
+
     /**
      * 文章id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 文章标题
      */
-    private String articleTitle;
+    private String title;
 
     /**
      * 访问量
      */
-    private Integer viewCount;
+    private Long viewCount;
+
 }
