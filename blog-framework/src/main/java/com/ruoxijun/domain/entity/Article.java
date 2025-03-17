@@ -7,59 +7,55 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
- * @TableName t_article
+ * @TableName article
  */
-@TableName(value = "t_article")
+@TableName(value = "article")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Article {
     /**
      * 文章id
      */
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 作者id
      */
     @TableField(value = "user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 分类id
      */
     @TableField(value = "category_id")
-    private Integer categoryId;
+    private Long categoryId;
 
     /**
      * 缩略图
      */
-    @TableField(value = "article_cover")
-    private String articleCover;
+    @TableField(value = "cover")
+    private String cover;
 
     /**
      * 文章标题
      */
-    @TableField(value = "article_title")
-    private String articleTitle;
+    @TableField(value = "title")
+    private String title;
 
     /**
      * 文章摘要
      */
-    @TableField(value = "article_desc")
-    private String articleDesc;
+    @TableField(value = "description")
+    private String description;
 
     /**
      * 文章内容
      */
-    @TableField(value = "article_content")
-    private String articleContent;
+    @TableField(value = "content")
+    private String content;
 
     /**
      * 类型 (1原创 2转载 3翻译)
@@ -74,16 +70,16 @@ public class Article {
     private Integer isTop;
 
     /**
-     * 是否删除 (0否 1是)
-     */
-    @TableField(value = "is_delete")
-    private Integer isDelete;
-
-    /**
      * 是否推荐 (0否 1是)
      */
     @TableField(value = "is_recommend")
     private Integer isRecommend;
+
+    /**
+     * 访问量
+     */
+    @TableField(value = "view_count")
+    private Long viewCount;
 
     /**
      * 状态 (1公开 2私密 3评论可见)
@@ -104,8 +100,8 @@ public class Article {
     private Date updateTime;
 
     /**
-     * 访问量
+     * 是否删除 (0否 1是)
      */
-    @TableField(value = "view_count")
-    private Integer viewCount;
+    @TableField(value = "is_delete")
+    private Integer isDelete;
 }

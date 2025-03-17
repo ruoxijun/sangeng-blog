@@ -13,7 +13,7 @@
             <option name="extraClassSuffix" value="" />
             <option name="ignoreFieldPrefix" value="" />
             <option name="ignoreFieldSuffix" value="" />
-            <option name="ignoreTablePrefix" value="t_" />
+            <option name="ignoreTablePrefix" value="" />
             <option name="ignoreTableSuffix" value="" />
             <option name="moduleName" value="blog-framework" />
             <option name="modulePath" value="$PROJECT_DIR$/blog-framework" />
@@ -57,7 +57,7 @@
                   <option name="fileName" value="${domain.fileName}Mapper" />
                   <option name="fileNameWithSuffix" value="${domain.fileName}Mapper.xml" />
                   <option name="modulePath" value="$PROJECT_DIR$/blog-framework" />
-                  <option name="packageName" value="mapper" />
+                  <option name="packageName" value="${domain.basePackage}.mapper" />
                 </ModuleInfoGo>
               </list>
             </option>
@@ -69,7 +69,7 @@
               <list>
                 <TableUIInfo>
                   <option name="className" value="Article" />
-                  <option name="tableName" value="t_article" />
+                  <option name="tableName" value="article" />
                 </TableUIInfo>
               </list>
             </option>

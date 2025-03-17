@@ -26,7 +26,7 @@ public class ArticleController {
     }
 
     @GetMapping("/hotArticleList")
-    public R<List<HotArticleVo>> hotArticleList(){
+    public R<List<HotArticleVo>> hotArticleList() {
         return R.ok(articleService.hotArticleList());
     }
 
