@@ -54,6 +54,16 @@
                 <version>3.5.10.1</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-bom -->
+            <!-- mybatis-plus 插件依赖管理 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>3.5.10.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.aliyun.oss/aliyun-sdk-oss -->
             <dependency>
                 <groupId>com.aliyun.oss</groupId>
