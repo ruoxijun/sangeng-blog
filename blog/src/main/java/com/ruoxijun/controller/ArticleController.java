@@ -1,8 +1,9 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
-import com.ruoxijun.domain.entity.Article;
+import com.ruoxijun.domain.vo.ArticleListVo;
 import com.ruoxijun.domain.vo.HotArticleVo;
+import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +19,9 @@ public class ArticleController {
     @Resource
     private ArticleService articleService;
 
-    @GetMapping("/list")
-    public List<Article> list() {
-        List<Article> list = articleService.list();
-        System.out.println(list);
-        return list;
+    @GetMapping("/articleList")
+    public R<PageVo<ArticleListVo>> articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        return R.ok(articleService.articleList(pageNum, pageSize, categoryId));
     }
 
     @GetMapping("/hotArticleList")
