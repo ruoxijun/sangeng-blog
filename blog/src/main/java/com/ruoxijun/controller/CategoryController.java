@@ -1,7 +1,7 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
-import com.ruoxijun.domain.entity.Category;
+import com.ruoxijun.domain.vo.CategoryListVo;
 import com.ruoxijun.service.CategoryService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +18,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/getCategoryList")
-    public R<List<Category>> getCategoryList() {
-        return R.ok(categoryService.list());
+    public R<List<CategoryListVo>> getCategoryList() {
+        return R.ok(categoryService.getCategoryList());
     }
 
 }

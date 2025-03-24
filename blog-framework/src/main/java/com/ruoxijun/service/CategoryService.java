@@ -2,6 +2,9 @@ package com.ruoxijun.service;
 
 import com.ruoxijun.domain.entity.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoxijun.domain.vo.CategoryListVo;
+
+import java.util.List;
 
 /**
  * @author Administrator
@@ -9,5 +12,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @createDate 2025-03-17 22:37:46
  */
 public interface CategoryService extends IService<Category> {
+
+    List<CategoryListVo> getCategoryList();
 
 }

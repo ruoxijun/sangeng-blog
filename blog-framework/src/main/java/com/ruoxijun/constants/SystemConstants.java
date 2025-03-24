@@ -17,4 +17,8 @@ public class SystemConstants {
      */
     public static final int ARTICLE_HOT_PAGE_SIZE = 10;
 
+    /**
+     * 分类(文章)状态 正常
+     */
+    public static final int CATEGORY_STATUS_NORMAL = 0;
 }
