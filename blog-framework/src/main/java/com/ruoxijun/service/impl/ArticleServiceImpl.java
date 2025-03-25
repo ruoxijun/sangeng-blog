@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.entity.Article;
+import com.ruoxijun.domain.entity.Category;
 import com.ruoxijun.domain.vo.ArticleListVo;
 import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.domain.vo.PageVo;
@@ -13,6 +14,7 @@ import com.ruoxijun.mapper.ArticleMapper;
 import com.ruoxijun.service.CategoryService;
 import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -27,6 +29,7 @@ import java.util.Objects;
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
+    @Lazy
     @Resource
     private CategoryService categoryService;
 
@@ -53,14 +56,14 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleQueryWrapper.eq(condition, Article::getCategoryId, categoryId);
         articleQueryWrapper.orderByDesc(Article::getIsTop);
         Page<Article> page = this.page(articlePage, articleQueryWrapper);
-        List<Article> articleList = page.getRecords();
-        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, ArticleListVo.class);
         long total = page.getTotal();
+        List<Article> articleList = page.getRecords();
+        articleList.forEach(article -> {
+            Category category = categoryService.getById(article.getCategoryId());
+            article.setCategoryName(category.getName());
+        });
+        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, ArticleListVo.class);
         return new PageVo<>(articleListVos, total);
     }
 
 }
-
-
-
-

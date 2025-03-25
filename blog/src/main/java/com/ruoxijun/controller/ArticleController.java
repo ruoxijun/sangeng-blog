@@ -8,6 +8,7 @@ import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -20,7 +21,9 @@ public class ArticleController {
     private ArticleService articleService;
 
     @GetMapping("/articleList")
-    public R<PageVo<ArticleListVo>> articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+    public R<PageVo<ArticleListVo>> articleList(@RequestParam(defaultValue = "1") Integer pageNum,
+                                                @RequestParam(defaultValue = "10") Integer pageSize,
+                                                @RequestParam(required = false) Long categoryId) {
         return R.ok(articleService.articleList(pageNum, pageSize, categoryId));
     }
 
