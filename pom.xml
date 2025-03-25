@@ -99,6 +99,8 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <!-- 修复接口默认无注解参数无法自动获取到值 -->
+                    <parameters>true</parameters>
                 </configuration>
             </plugin>
         </plugins>
