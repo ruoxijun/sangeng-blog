@@ -2,6 +2,7 @@ package com.ruoxijun.service;
 
 import com.ruoxijun.domain.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoxijun.domain.vo.ArticleDetailVo;
 import com.ruoxijun.domain.vo.ArticleListVo;
 import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.domain.vo.PageVo;
@@ -18,4 +19,7 @@ public interface ArticleService extends IService<Article> {
     List<HotArticleVo> hotArticleList();
 
     PageVo<ArticleListVo> articleList(Integer pageNum, Integer pageSize, Long categoryId);
+
+    ArticleDetailVo articleDetail(Long id);
+
 }

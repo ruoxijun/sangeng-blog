@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.entity.Article;
 import com.ruoxijun.domain.entity.Category;
+import com.ruoxijun.domain.vo.ArticleDetailVo;
 import com.ruoxijun.domain.vo.ArticleListVo;
 import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.domain.vo.PageVo;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author Administrator
@@ -64,6 +66,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         });
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, ArticleListVo.class);
         return new PageVo<>(articleListVos, total);
+    }
+
+    @Override
+    public ArticleDetailVo articleDetail(Long id) {
+        Optional<Article> articleOptional = this.getOptById(id);
+        if (articleOptional.isEmpty()) {
+            return null;
+        }
+        Article article = articleOptional.get();
+        Long categoryId = article.getCategoryId();
+        Optional<Category> categoryOptional = categoryService.getOptById(categoryId);
+        categoryOptional.ifPresent(category -> article.setCategoryName(category.getName()));
+        return BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
     }
 
 }
