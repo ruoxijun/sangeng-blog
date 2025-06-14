@@ -21,4 +21,10 @@ public class SystemConstants {
      * 分类(文章)状态 正常
      */
     public static final int CATEGORY_STATUS_NORMAL = 0;
+
+    /**
+     * 友链状态 通过
+     */
+    public static final int LINK_STATUS_NORMAL = 0;
+
 }
