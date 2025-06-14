@@ -48,9 +48,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public PageVo<ArticleListVo> articleList(@RequestParam Integer pageNum,
-                                             @RequestParam Integer pageSize,
-                                             @RequestParam(required = false) Long categoryId) {
+    public PageVo<ArticleListVo> articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         Page<Article> articlePage = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<Article> articleQueryWrapper = new LambdaQueryWrapper<>();
         articleQueryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_PUBLISH);
