@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.ruoxijun.domain.entity.Article">
         <id property="id" column="id"/>
-        <result property="userId" column="user_id"/>
+        <result property="createBy" column="create_by"/>
         <result property="categoryId" column="category_id"/>
         <result property="cover" column="cover"/>
         <result property="title" column="title"/>
@@ -19,13 +19,13 @@
         <result property="status" column="status"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
-        <result property="isDelete" column="is_delete"/>
+        <result property="delFlag" column="del_flag"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id
-        ,user_id,category_id,cover,title,description,
+        ,create_by,category_id,cover,title,description,
         content,article_type,is_top,is_recommend,view_count,
-        status,create_time,update_time,is_delete
+        status,create_time,update_time,del_flag
     </sql>
 </mapper>
