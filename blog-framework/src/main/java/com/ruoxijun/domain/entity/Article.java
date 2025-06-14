@@ -24,8 +24,14 @@ public class Article {
     /**
      * 作者id
      */
-    @TableField(value = "user_id")
-    private Long userId;
+    @TableField(value = "create_by")
+    private Long createBy;
+
+    /**
+     * 修改者 id
+     */
+    @TableField(value = "update_by")
+    private Long updateBy;
 
     /**
      * 分类id
@@ -109,6 +115,6 @@ public class Article {
     /**
      * 是否删除 (0否 1是)
      */
-    @TableField(value = "is_delete")
-    private Integer isDelete;
+    @TableField(value = "del_flag")
+    private Integer delFlag;
 }

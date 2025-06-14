@@ -72,6 +72,6 @@ public class Category {
     /**
      * 是否删除 (0否 1是)
      */
-    @TableField(value = "is_delete")
-    private Integer isDelete;
+    @TableField(value = "del_flag")
+    private Integer delFlag;
 }
