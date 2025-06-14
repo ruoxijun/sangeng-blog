@@ -2,10 +2,10 @@ server:
   port: 8888
 spring:
   datasource:
-    # url: jdbc:mysql://localhost:3306/sangeng_blog?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    # driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mariadb://192.168.0.166:3306/sangeng_blog?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sangeng_blog?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mariadb://192.168.0.166:3306/sangeng_blog?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    #    driver-class-name: org.mariadb.jdbc.Driver
     username: admin
     password: 123456
   servlet:
