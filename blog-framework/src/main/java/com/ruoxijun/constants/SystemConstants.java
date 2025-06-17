@@ -27,4 +27,9 @@ public class SystemConstants {
      */
     public static final int LINK_STATUS_NORMAL = 0;
 
+    /**
+     * 登录用户 redis key
+     */
+    public static final String LOGIN_USER_KEY = "loginUser:";
+
 }

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.ruoxijun.constants.SystemConstants.LOGIN_USER_KEY;
+
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -36,7 +38,7 @@ public class LoginServiceImpl implements LoginService {
         Long id = loginUser.getUser().getId();
         String jwt = JwtUtil.createJWT(id.toString());
         // 用户信息存储到 redis
-        redisCache.setCacheObject("login:" + id, loginUser);
+        redisCache.setCacheObject(LOGIN_USER_KEY + id, loginUser);
         // 返回用户登录信息
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         return new LoginUserVo(jwt, userInfoVo);
