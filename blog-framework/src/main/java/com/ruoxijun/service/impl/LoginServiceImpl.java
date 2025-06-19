@@ -12,6 +12,7 @@ import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -42,5 +43,13 @@ public class LoginServiceImpl implements LoginService {
         // 返回用户登录信息
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         return new LoginUserVo(jwt, userInfoVo);
+    }
+
+    @Override
+    public void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long id = loginUser.getUser().getId();
+        redisCache.deleteObject(LOGIN_USER_KEY + id);
     }
 }

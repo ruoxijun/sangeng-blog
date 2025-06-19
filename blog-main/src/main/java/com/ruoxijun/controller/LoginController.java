@@ -20,4 +20,10 @@ public class LoginController {
         return R.ok(loginservice.login(user));
     }
 
+    @PostMapping("/logout")
+    public R<Object> logout() {
+        loginservice.logout();
+        return R.ok();
+    }
+
 }

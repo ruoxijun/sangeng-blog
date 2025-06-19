@@ -7,4 +7,5 @@ public interface LoginService {
 
     LoginUserVo login(User user);
 
+    void logout();
 }
