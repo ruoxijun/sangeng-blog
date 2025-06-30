@@ -1,7 +1,9 @@
 package com.ruoxijun.service;
 
-import com.ruoxijun.domain.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoxijun.domain.entity.Comment;
+import com.ruoxijun.domain.vo.CommentVo;
+import com.ruoxijun.domain.vo.PageVo;
 
 /**
  * @author ruoxijun
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CommentService extends IService<Comment> {
 
+    PageVo<CommentVo> commentList(Long articleId, Integer pageNum, Integer pageSize);
 }

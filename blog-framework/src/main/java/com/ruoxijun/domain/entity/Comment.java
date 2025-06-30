@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
 import java.util.Date;
-
-import lombok.Data;
 
 /**
  * @TableName comment
@@ -46,13 +45,13 @@ public class Comment {
     private String content;
 
     /**
-     * 被回复评论的 userid
+     * 被回复评论的 userid(-1根评论或普通子评论)
      */
     @TableField(value = "to_comment_user_id")
     private Long toCommentUserId;
 
     /**
-     * 被回复评论 id
+     * 被回复评论 id(-1根评论或普通子评论)
      */
     @TableField(value = "to_comment_id")
     private Long toCommentId;
