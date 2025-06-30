@@ -7,14 +7,13 @@ import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_CURRENT_STR;
+import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_SIZE_STR;
 
 @RestController
 @RequestMapping("/article")
@@ -24,8 +23,8 @@ public class ArticleController {
     private ArticleService articleService;
 
     @GetMapping("/articleList")
-    public R<PageVo<ArticleListVo>> articleList(@RequestParam(defaultValue = "1") Integer pageNum,
-                                                @RequestParam(defaultValue = "10") Integer pageSize,
+    public R<PageVo<ArticleListVo>> articleList(@RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
+                                                @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_STR) Integer pageSize,
                                                 @RequestParam(required = false) Long categoryId) {
         return R.ok(articleService.articleList(pageNum, pageSize, categoryId));
     }

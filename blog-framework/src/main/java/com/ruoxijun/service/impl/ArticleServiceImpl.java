@@ -17,7 +17,6 @@ import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +40,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         queryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_PUBLISH)
                 .orderByDesc(Article::getViewCount);
         Page<Article> articlePage = new Page<>(
-                SystemConstants.ARTICLE_HOT_PAGE_CURRENT, SystemConstants.ARTICLE_HOT_PAGE_SIZE);
+                SystemConstants.DEFAULT_PAGE_CURRENT, SystemConstants.DEFAULT_PAGE_SIZE);
         Page<Article> page = this.page(articlePage, queryWrapper);
         List<Article> articleList = page.getRecords();
         return BeanCopyUtils.copyBeanList(articleList, HotArticleVo.class);

@@ -8,14 +8,24 @@ public class SystemConstants {
     public static final int ARTICLE_STATUS_PUBLISH = 1;
 
     /**
-     * 文章热门列表分页，页数 1
+     * 默认列表分页，页数 1
      */
-    public static final int ARTICLE_HOT_PAGE_CURRENT = 1;
+    public static final int DEFAULT_PAGE_CURRENT = 1;
 
     /**
-     * 文章热门列表分页，数据量 10
+     * 默认列表分页，页数 1 字符串
      */
-    public static final int ARTICLE_HOT_PAGE_SIZE = 10;
+    public static final String DEFAULT_PAGE_CURRENT_STR = "1";
+
+    /**
+     * 默认列表分页，数据量 10
+     */
+    public static final int DEFAULT_PAGE_SIZE = 10;
+
+    /**
+     * 默认列表分页，数据量 10 字符串
+     */
+    public static final String DEFAULT_PAGE_SIZE_STR = "10";
 
     /**
      * 分类(文章)状态 正常
