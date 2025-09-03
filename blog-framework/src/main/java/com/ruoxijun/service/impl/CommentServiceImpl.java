@@ -74,6 +74,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         return commentVoList;
     }
 
+    @Override
+    public CommentVo addComment(Comment comment) {
+        return BeanCopyUtils.copyBean(this.save(comment), CommentVo.class);
+    }
 }
 
 

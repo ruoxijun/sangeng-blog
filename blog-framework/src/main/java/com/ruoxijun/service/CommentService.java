@@ -13,4 +13,6 @@ import com.ruoxijun.domain.vo.PageVo;
 public interface CommentService extends IService<Comment> {
 
     PageVo<CommentVo> commentList(Long articleId, Integer pageNum, Integer pageSize);
+
+    CommentVo addComment(Comment comment);
 }
