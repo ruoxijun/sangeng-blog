@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.ruoxijun.constants.SystemConstants.ARTICLE_COMMENT;
-import static com.ruoxijun.constants.SystemConstants.ARTICLE_ROOT_COMMENT;
+import static com.ruoxijun.constants.SystemConstants.ROOT_COMMENT;
 
 /**
  * @author ruoxijun
@@ -33,12 +33,12 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
     private UserMapper userMapper;
 
     @Override
-    public PageVo<CommentVo> commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public PageVo<CommentVo> commentList(int type, Long articleId, Integer pageNum, Integer pageSize) {
         // 查询根评论
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Comment::getArticleId, articleId);
-        queryWrapper.eq(Comment::getType, ARTICLE_COMMENT);
-        queryWrapper.eq(Comment::getRootId, ARTICLE_ROOT_COMMENT);
+        queryWrapper.eq(type == ARTICLE_COMMENT, Comment::getArticleId, articleId);
+        queryWrapper.eq(Comment::getType, type);
+        queryWrapper.eq(Comment::getRootId, ROOT_COMMENT);
         Page<Comment> page = new Page<>(pageNum, pageSize);
         List<Comment> commentList = page.getRecords();
         long total = page.getTotal();
@@ -67,7 +67,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         commentVoList.forEach(commentVo -> {
             User user = userMapper.selectById(commentVo.getCreateBy());
             commentVo.setUserName(Objects.nonNull(user) ? user.getNickName() : null);
-            if (commentVo.getToCommentUserId() == ARTICLE_ROOT_COMMENT) return;
+            if (commentVo.getToCommentUserId() == ROOT_COMMENT) return;
             User commentUser = userMapper.selectById(commentVo.getToCommentUserId());
             commentVo.setToCommentUserName(Objects.nonNull(commentUser) ? commentUser.getNickName() : null);
         });

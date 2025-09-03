@@ -48,13 +48,13 @@ public class SystemConstants {
     public static final int ARTICLE_COMMENT = 0;
 
     /**
-     * 文章根评论
-     */
-    public static final int ARTICLE_ROOT_COMMENT = -1;
-
-    /**
      * 友链评论
      */
     public static final int LINK_COMMENT = 1;
+
+    /**
+     * 根评论
+     */
+    public static final int ROOT_COMMENT = -1;
 
 }

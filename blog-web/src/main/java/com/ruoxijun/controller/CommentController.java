@@ -25,7 +25,7 @@ public class CommentController {
     public R<PageVo<CommentVo>> commentList(@RequestParam Long articleId,
                                             @RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
                                             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_STR) Integer pageSize) {
-        return R.ok(commentService.commentList(articleId, pageNum, pageSize));
+        return R.ok(commentService.commentList(ARTICLE_COMMENT, articleId, pageNum, pageSize));
     }
 
     @PostMapping
@@ -38,6 +38,12 @@ public class CommentController {
             throw new RuntimeException(ResultEnum.NO_CONTENT.getDescription());
         }
         return R.ok(commentService.addComment(comment));
+    }
+
+    @GetMapping("/linkCommentList")
+    public R<PageVo<CommentVo>> linkCommentList(@RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
+                                                @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_STR) Integer pageSize) {
+        return R.ok(commentService.commentList(LINK_COMMENT, null, pageNum, pageSize));
     }
 
 }
