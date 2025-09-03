@@ -1,0 +1,24 @@
+package com.ruoxijun.controller;
+
+import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.vo.UserInfoVo;
+import com.ruoxijun.service.UserService;
+import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+
+    @Resource
+    private UserService userService;
+
+    @GetMapping("/info")
+    public R<UserInfoVo> userInfo() {
+        return R.ok(userService.userInfo());
+    }
+
+}
