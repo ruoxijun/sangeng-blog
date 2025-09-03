@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.LoginUser;
 import com.ruoxijun.enums.ResultEnum;
-import com.ruoxijun.utils.JwtUtil;
+import com.ruoxijun.utils.JwtUtils;
 import com.ruoxijun.utils.RedisCache;
 import com.ruoxijun.utils.WebUtils;
 import io.jsonwebtoken.Claims;
@@ -48,7 +48,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         // 2. 解析 token
         String userId = null;
         try {
-            Claims jwt = JwtUtil.parseJWT(token);
+            Claims jwt = JwtUtils.parseJWT(token);
             userId = jwt.getSubject();
         } catch (Exception e) {
             unauthorizedResponse(response);
