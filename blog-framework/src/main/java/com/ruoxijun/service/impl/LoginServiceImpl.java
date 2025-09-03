@@ -6,7 +6,7 @@ import com.ruoxijun.domain.vo.LoginUserVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.LoginService;
 import com.ruoxijun.utils.BeanCopyUtils;
-import com.ruoxijun.utils.JwtUtil;
+import com.ruoxijun.utils.JwtUtils;
 import com.ruoxijun.utils.RedisCache;
 import jakarta.annotation.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,7 +37,7 @@ public class LoginServiceImpl implements LoginService {
         // 生成 jwt
         LoginUser loginUser = (LoginUser) authenticated.getPrincipal();
         Long id = loginUser.getUser().getId();
-        String jwt = JwtUtil.createJWT(id.toString());
+        String jwt = JwtUtils.createJWT(id.toString());
         // 用户信息存储到 redis
         redisCache.setCacheObject(LOGIN_USER_KEY + id, loginUser);
         // 返回用户登录信息
