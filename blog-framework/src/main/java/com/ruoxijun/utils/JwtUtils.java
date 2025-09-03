@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.UUID;
 
-public class JwtUtil {
+public class JwtUtils {
 
     public static final Long JWT_TTL = 60 * 60 * 1000L; // 一个小时
     public static final String JWT_ISSUER = "ruoxijun";
@@ -46,7 +46,7 @@ public class JwtUtil {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         if (ttlMillis == null) {
-            ttlMillis = JwtUtil.JWT_TTL;
+            ttlMillis = JwtUtils.JWT_TTL;
         }
         long expMillis = nowMillis + ttlMillis;
         Date expDate = new Date(expMillis);
@@ -80,7 +80,7 @@ public class JwtUtil {
      * @return 签名
      */
     public static SecretKey generalKey() {
-        return Keys.hmacShaKeyFor(JwtUtil.JWT_KEY.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(JwtUtils.JWT_KEY.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
