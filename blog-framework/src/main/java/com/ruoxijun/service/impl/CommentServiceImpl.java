@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+import static com.ruoxijun.constants.SystemConstants.ARTICLE_COMMENT;
+import static com.ruoxijun.constants.SystemConstants.ARTICLE_ROOT_COMMENT;
+
 /**
  * @author ruoxijun
  * @description 针对表【comment】的数据库操作Service实现
@@ -34,8 +37,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         // 查询根评论
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Comment::getArticleId, articleId);
-        queryWrapper.eq(Comment::getType, 0);
-        queryWrapper.eq(Comment::getRootId, -1);
+        queryWrapper.eq(Comment::getType, ARTICLE_COMMENT);
+        queryWrapper.eq(Comment::getRootId, ARTICLE_ROOT_COMMENT);
         Page<Comment> page = new Page<>(pageNum, pageSize);
         List<Comment> commentList = page.getRecords();
         long total = page.getTotal();
@@ -64,7 +67,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment>
         commentVoList.forEach(commentVo -> {
             User user = userMapper.selectById(commentVo.getCreateBy());
             commentVo.setUserName(Objects.nonNull(user) ? user.getNickName() : null);
-            if (commentVo.getToCommentUserId() == -1) return;
+            if (commentVo.getToCommentUserId() == ARTICLE_ROOT_COMMENT) return;
             User commentUser = userMapper.selectById(commentVo.getToCommentUserId());
             commentVo.setToCommentUserName(Objects.nonNull(commentUser) ? commentUser.getNickName() : null);
         });
