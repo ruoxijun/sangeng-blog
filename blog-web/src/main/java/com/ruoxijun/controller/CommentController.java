@@ -5,6 +5,7 @@ import com.ruoxijun.domain.entity.Comment;
 import com.ruoxijun.domain.vo.CommentVo;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.enums.ResultEnum;
+import com.ruoxijun.exception.SystemException;
 import com.ruoxijun.service.CommentService;
 import jakarta.annotation.Resource;
 import org.springframework.util.StringUtils;
@@ -35,7 +36,7 @@ public class CommentController {
             throw new RuntimeException("评论类型错误");
         }
         if (!StringUtils.hasText(comment.getContent())) {
-            throw new RuntimeException(ResultEnum.NO_CONTENT.getDescription());
+            throw new SystemException(ResultEnum.NO_CONTENT);
         }
         return R.ok(commentService.addComment(comment));
     }
