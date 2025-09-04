@@ -6,6 +6,7 @@ import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +28,10 @@ public class UserController {
     @PutMapping("/info")
     public R<Integer> updateUserInfo(@RequestBody User user) {
         return R.ok(userService.updateUserInfo(user));
+    }
+
+    @PostMapping("/register")
+    public R<UserInfoVo> register(@RequestBody User user) {
+        return R.ok(userService.register(user));
     }
 }

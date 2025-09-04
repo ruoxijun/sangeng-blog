@@ -40,6 +40,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userMapper.update(null, updateWrapper);
     }
 
+    @Override
+    public UserInfoVo register(User user) {
+        User u = new User();
+        u.setUserName(user.getUserName());
+        u.setPassword(user.getPassword());
+        u.setNickName(user.getNickName());
+        u.setEmail(user.getEmail());
+        userMapper.insert(u);
+        return BeanCopyUtils.copyBean(u, UserInfoVo.class);
+    }
+
 }
 
 
