@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @PutMapping("/info")
-    public R<Integer> updateUserInfo(@RequestBody User user) {
+    public R<UserInfoVo> updateUserInfo(@RequestBody User user) {
         return R.ok(userService.updateUserInfo(user));
     }
 

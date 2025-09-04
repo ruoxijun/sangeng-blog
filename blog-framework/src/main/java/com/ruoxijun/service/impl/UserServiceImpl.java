@@ -30,14 +30,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public int updateUserInfo(User user) {
+    public UserInfoVo updateUserInfo(User user) {
         LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(User::getId, SecurityUtils.getUserId())
                 .set(User::getAvatar, user.getAvatar())
                 .set(User::getEmail, user.getEmail())
                 .set(User::getNickName, user.getNickName())
                 .set(User::getSex, user.getSex());
-        return userMapper.update(null, updateWrapper);
+        userMapper.update(null, updateWrapper);
+        return BeanCopyUtils.copyBean(
+                userMapper.selectById(SecurityUtils.getUserId()), UserInfoVo.class);
     }
 
     @Override

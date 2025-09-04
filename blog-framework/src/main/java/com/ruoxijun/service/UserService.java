@@ -13,7 +13,7 @@ public interface UserService extends IService<User> {
 
     UserInfoVo userInfo();
 
-    int updateUserInfo(User user);
+    UserInfoVo updateUserInfo(User user);
 
     UserInfoVo register(User user);
 }
