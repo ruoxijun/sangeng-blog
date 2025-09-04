@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -83,14 +84,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public Long updateViewCount(Long id) {
-        String key = SystemConstants.ARTICLE_VIEW_COUNT_KEY + id;
-        Long viewCount = redisCache.getCacheObject(key);
-        if (Objects.isNull(viewCount)) {
+        Long viewCount = 0L;
+        if (!redisCache.isMapKeyExists(SystemConstants.ARTICLE_VIEW_COUNT_KEY, String.valueOf(id))) {
             viewCount = this.getById(id).getViewCount();
-            redisCache.setCacheObject(key, viewCount.intValue());
+            redisCache.setCacheMapValue(SystemConstants.ARTICLE_VIEW_COUNT_KEY,
+                    String.valueOf(id), viewCount.intValue());
         }
-        viewCount = redisCache.increment(key, 1);
+        viewCount = redisCache.incrementMapValue(SystemConstants.ARTICLE_VIEW_COUNT_KEY,
+                String.valueOf(id), 1);
         return viewCount;
+    }
+
+    public void updateArticleViewCountAll() {
+        if (redisCache.isExists(SystemConstants.ARTICLE_VIEW_COUNT_KEY)) {
+            Map<String, Integer> viewCountMap = redisCache.getCacheMap(SystemConstants.ARTICLE_VIEW_COUNT_KEY);
+            List<Article> articleList = viewCountMap.entrySet().stream()
+                    .map(entry -> new Article(Long.parseLong(entry.getKey()), entry.getValue().longValue()))
+                    .toList();
+            this.updateBatchById(articleList, 50);
+        }
     }
 
 }

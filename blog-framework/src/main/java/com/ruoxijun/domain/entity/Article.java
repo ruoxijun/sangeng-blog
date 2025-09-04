@@ -7,14 +7,24 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @TableName article
  */
 @TableName(value = "article")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Article {
+
+    public Article(Long id, Long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
+
     /**
      * 文章id
      */

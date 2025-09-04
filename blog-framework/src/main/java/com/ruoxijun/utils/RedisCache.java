@@ -220,10 +220,36 @@ public class RedisCache {
      * 自增
      *
      * @param key 键
-     * @param i 自增数
+     * @param i   自增数
      * @return 自增后的值
      */
     public Long increment(String key, int i) {
         return redisTemplate.opsForValue().increment(key, i);
+    }
+
+    /**
+     * 自增Map中的值
+     *
+     * @param key   键
+     * @param hKey  Map中的键
+     * @param i 自增数
+     * @return 自增后的值
+     */
+    public Long incrementMapValue(String key, String hKey, int i) {
+        return redisTemplate.opsForHash().increment(key, hKey, i);
+    }
+
+    /**
+     * 判断是否存在
+     *
+     * @param key 键
+     * @return 是否存在
+     */
+    public boolean isExists(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    public boolean isMapKeyExists(String key, String hKey) {
+        return redisTemplate.opsForHash().hasKey(key, hKey);
     }
 }
