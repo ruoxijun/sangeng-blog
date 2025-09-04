@@ -1,5 +1,6 @@
 package com.ruoxijun.controller;
 
+import com.ruoxijun.annotation.SystemLog;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.User;
 import com.ruoxijun.domain.vo.UserInfoVo;
@@ -25,6 +26,7 @@ public class UserController {
         return R.ok(userService.userInfo());
     }
 
+    @SystemLog("更新用户信息")
     @PutMapping("/info")
     public R<UserInfoVo> updateUserInfo(@RequestBody User user) {
         return R.ok(userService.updateUserInfo(user));
