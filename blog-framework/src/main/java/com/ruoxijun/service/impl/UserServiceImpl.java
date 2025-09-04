@@ -1,5 +1,6 @@
 package com.ruoxijun.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.domain.entity.User;
 import com.ruoxijun.domain.vo.UserInfoVo;
@@ -26,6 +27,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public UserInfoVo userInfo() {
         User user = userMapper.selectById(SecurityUtils.getUserId());
         return BeanCopyUtils.copyBean(user, UserInfoVo.class);
+    }
+
+    @Override
+    public int updateUserInfo(User user) {
+        LambdaUpdateWrapper<User> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.eq(User::getId, SecurityUtils.getUserId())
+                .set(User::getAvatar, user.getAvatar())
+                .set(User::getEmail, user.getEmail())
+                .set(User::getNickName, user.getNickName())
+                .set(User::getSex, user.getSex());
+        return userMapper.update(null, updateWrapper);
     }
 
 }

@@ -1,10 +1,13 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.entity.User;
 import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,4 +24,8 @@ public class UserController {
         return R.ok(userService.userInfo());
     }
 
+    @PutMapping("/info")
+    public R<Integer> updateUserInfo(@RequestBody User user) {
+        return R.ok(userService.updateUserInfo(user));
+    }
 }
