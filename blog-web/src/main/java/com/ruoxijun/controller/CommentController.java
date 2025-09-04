@@ -1,12 +1,14 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.CommentDto;
 import com.ruoxijun.domain.entity.Comment;
 import com.ruoxijun.domain.vo.CommentVo;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.enums.ResultEnum;
 import com.ruoxijun.exception.SystemException;
 import com.ruoxijun.service.CommentService;
+import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +32,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public R<CommentVo> addComment(@RequestBody Comment comment) {
+    public R<CommentVo> addComment(@RequestBody CommentDto comment) {
         Integer type = comment.getType();
         if (Objects.isNull(type) || (type != ARTICLE_COMMENT && type != LINK_COMMENT)) {
             throw new RuntimeException("评论类型错误");
@@ -38,7 +40,7 @@ public class CommentController {
         if (!StringUtils.hasText(comment.getContent())) {
             throw new SystemException(ResultEnum.NO_CONTENT);
         }
-        return R.ok(commentService.addComment(comment));
+        return R.ok(commentService.addComment(BeanCopyUtils.copyBean(comment, Comment.class)));
     }
 
     @GetMapping("/linkCommentList")
