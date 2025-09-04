@@ -14,6 +14,7 @@ import com.ruoxijun.service.ArticleService;
 import com.ruoxijun.mapper.ArticleMapper;
 import com.ruoxijun.service.CategoryService;
 import com.ruoxijun.utils.BeanCopyUtils;
+import com.ruoxijun.utils.RedisCache;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Lazy
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private RedisCache redisCache;
 
     @Override
     public List<HotArticleVo> hotArticleList() {
@@ -76,6 +79,18 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Optional<Category> categoryOptional = categoryService.getOptById(categoryId);
         categoryOptional.ifPresent(category -> article.setCategoryName(category.getName()));
         return BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+    }
+
+    @Override
+    public Long updateViewCount(Long id) {
+        String key = SystemConstants.ARTICLE_VIEW_COUNT_KEY + id;
+        Long viewCount = redisCache.getCacheObject(key);
+        if (Objects.isNull(viewCount)) {
+            viewCount = this.getById(id).getViewCount();
+            redisCache.setCacheObject(key, viewCount.intValue());
+        }
+        viewCount = redisCache.increment(key, 1);
+        return viewCount;
     }
 
 }

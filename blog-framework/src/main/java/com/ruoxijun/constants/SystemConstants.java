@@ -57,4 +57,8 @@ public class SystemConstants {
      */
     public static final int ROOT_COMMENT = -1;
 
+    /**
+     * 文章浏览量 redis key
+     */
+    public static final String ARTICLE_VIEW_COUNT_KEY = "article:viewCount:";
 }

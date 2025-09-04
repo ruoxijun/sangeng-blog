@@ -215,4 +215,15 @@ public class RedisCache {
     public Collection<String> keys(final String pattern) {
         return redisTemplate.keys(pattern);
     }
+
+    /**
+     * 自增
+     *
+     * @param key 键
+     * @param i 自增数
+     * @return 自增后的值
+     */
+    public Long increment(String key, int i) {
+        return redisTemplate.opsForValue().increment(key, i);
+    }
 }

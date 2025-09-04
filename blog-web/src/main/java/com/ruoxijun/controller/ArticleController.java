@@ -43,4 +43,9 @@ public class ArticleController {
         return R.ok(articleDetailVo);
     }
 
+    @PutMapping("/updateViewCount/{id}")
+    public R<Long> updateViewCount(@PathVariable Long id) {
+        return R.ok(articleService.updateViewCount(id));
+    }
+
 }

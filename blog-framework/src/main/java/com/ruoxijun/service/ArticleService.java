@@ -22,4 +22,5 @@ public interface ArticleService extends IService<Article> {
 
     ArticleDetailVo articleDetail(Long id);
 
+    Long updateViewCount(Long id);
 }
