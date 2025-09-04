@@ -76,9 +76,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             return null;
         }
         Article article = articleOptional.get();
+        // 获取分类名
         Long categoryId = article.getCategoryId();
         Optional<Category> categoryOptional = categoryService.getOptById(categoryId);
         categoryOptional.ifPresent(category -> article.setCategoryName(category.getName()));
+        // 获取浏览次数
+        article.setViewCount(updateViewCount(id));
         return BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
     }
 
