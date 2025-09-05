@@ -70,7 +70,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
      * @param response 响应对象
      */
     private void unauthorizedResponse(HttpServletResponse response) {
-        R<Object> data = R.r(ResultEnum.UNAUTHORIZED);
+        R<Void> data = R.r(ResultEnum.UNAUTHORIZED);
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         WebUtils.renderString(response, JSON.toJSONString(data));
     }

@@ -17,6 +17,9 @@ import java.util.Objects;
 
 import static com.ruoxijun.constants.SystemConstants.*;
 
+/**
+ * 评论
+ */
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
@@ -24,6 +27,14 @@ public class CommentController {
     @Resource
     private CommentService commentService;
 
+    /**
+     * 获取评论列表
+     *
+     * @param articleId 文章id
+     * @param pageNum   页码
+     * @param pageSize  每页显示的条数
+     * @return 评论列表
+     */
     @GetMapping("/commentList")
     public R<PageVo<CommentVo>> commentList(@RequestParam Long articleId,
                                             @RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
@@ -31,6 +42,12 @@ public class CommentController {
         return R.ok(commentService.commentList(ARTICLE_COMMENT, articleId, pageNum, pageSize));
     }
 
+    /**
+     * 添加评论
+     *
+     * @param comment 评论
+     * @return 添加的评论
+     */
     @PostMapping
     public R<CommentVo> addComment(@RequestBody CommentDto comment) {
         Integer type = comment.getType();
@@ -43,6 +60,13 @@ public class CommentController {
         return R.ok(commentService.addComment(BeanCopyUtils.copyBean(comment, Comment.class)));
     }
 
+    /**
+     * 获取友链评论列表
+     *
+     * @param pageNum  页码
+     * @param pageSize 每页显示的条数
+     * @return 友链评论列表
+     */
     @GetMapping("/linkCommentList")
     public R<PageVo<CommentVo>> linkCommentList(@RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
                                                 @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_STR) Integer pageSize) {

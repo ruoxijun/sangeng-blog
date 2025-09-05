@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+/**
+ * 文章列表内的单个详情实例
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

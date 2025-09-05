@@ -24,7 +24,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException, ServletException {
         log.warn("Authentication failed for request [{}]: {}",
                 request.getRequestURI(), authException.getMessage());
-        R<Object> data = R.r(ResultEnum.UNAUTHORIZED);
+        R<String> data = R.r(ResultEnum.UNAUTHORIZED);
         if (authException instanceof BadCredentialsException) {
             data.data("账号或密码错误");
         } else if (authException instanceof InsufficientAuthenticationException) {

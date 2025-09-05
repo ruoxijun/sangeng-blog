@@ -9,7 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginUserVo {
 
+    /**
+     * token
+     */
     private String token;
+
+    /**
+     * 登录用户详细信息
+     */
     private UserInfoVo userInfo;
 
 }

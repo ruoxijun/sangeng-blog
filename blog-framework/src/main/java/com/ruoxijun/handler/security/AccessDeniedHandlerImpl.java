@@ -27,7 +27,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
             log.warn("Access denied for user [{}] to [{}]: {}",
                     user, request.getRequestURI(), accessDeniedException.getMessage());
         } finally {
-            R<Object> data = R.r(ResultEnum.FORBIDDEN);
+            R<String> data = R.r(ResultEnum.FORBIDDEN);
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             WebUtils.renderString(response, JSON.toJSONString(data));
         }

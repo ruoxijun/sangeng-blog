@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 评论信息
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

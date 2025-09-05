@@ -18,9 +18,20 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SystemException extends RuntimeException {
 
+    /**
+     * 错误码
+     */
     private int code;
+    /**
+     * 错误信息
+     */
     private String msg;
 
+    /**
+     * 枚举构造方法
+     *
+     * @param resultEnum 错误码枚举
+     */
     public SystemException(ResultEnum resultEnum) {
         this.code = resultEnum.getCode();
         this.msg = resultEnum.getDescription();
