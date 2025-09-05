@@ -4,7 +4,7 @@ import com.ruoxijun.domain.entity.LoginUser;
 import com.ruoxijun.domain.entity.User;
 import com.ruoxijun.domain.vo.LoginUserVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
-import com.ruoxijun.service.LoginService;
+import com.ruoxijun.service.AdminLoginService;
 import com.ruoxijun.utils.BeanCopyUtils;
 import com.ruoxijun.utils.JwtUtils;
 import com.ruoxijun.utils.RedisCache;
@@ -24,7 +24,7 @@ import static com.ruoxijun.constants.SystemConstants.ADMIN_LOGIN_USER_KEY;
  * 后台登录服务实现类
  */
 @Service
-public class AdminLoginServiceImpl implements LoginService {
+public class AdminLoginServiceImpl implements AdminLoginService {
 
     @Resource
     private AuthenticationManager authenticationManager;
