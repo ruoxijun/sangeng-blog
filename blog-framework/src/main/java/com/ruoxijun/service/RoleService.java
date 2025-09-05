@@ -1,0 +1,13 @@
+package com.ruoxijun.service;
+
+import com.ruoxijun.domain.entity.Role;
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ * @author ruoxijun
+ * @description 针对表【sys_role】的数据库操作Service
+ * @createDate 2025-09-05 20:48:28
+ */
+public interface RoleService extends IService<Role> {
+
+}
