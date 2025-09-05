@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * 文章表
+ *
  * @TableName article
  */
 @TableName(value = "article")

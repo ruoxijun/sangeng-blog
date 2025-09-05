@@ -8,11 +8,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * 登录用户
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginUser implements UserDetails {
 
+    /**
+     * 用户信息
+     */
     private User user;
 
     @Override

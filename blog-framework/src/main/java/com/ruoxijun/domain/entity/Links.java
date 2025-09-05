@@ -10,6 +10,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
+ * 友链
+ *
  * @TableName links
  */
 @TableName(value = "links")

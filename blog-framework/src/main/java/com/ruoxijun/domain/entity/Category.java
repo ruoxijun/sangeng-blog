@@ -10,6 +10,8 @@ import java.util.Date;
 import lombok.Data;
 
 /**
+ * 分类表
+ *
  * @TableName category
  */
 @TableName(value = "category")

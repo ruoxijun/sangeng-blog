@@ -6,6 +6,8 @@ import lombok.Data;
 import java.util.Date;
 
 /**
+ * 评论表
+ *
  * @TableName comment
  */
 @TableName(value = "comment")
