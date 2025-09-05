@@ -34,5 +34,11 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
 
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
+
 upload:
   path: D:/upload/

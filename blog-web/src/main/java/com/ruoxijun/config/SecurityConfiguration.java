@@ -40,6 +40,11 @@ public class SecurityConfiguration {
         return http
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/login").anonymous()
+                                // springdoc-openapi 接口文档地址：http://localhost:8888/swagger-ui/index.html
+                                .requestMatchers(
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**"
+                                ).anonymous()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
