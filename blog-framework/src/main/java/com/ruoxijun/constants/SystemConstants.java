@@ -43,6 +43,11 @@ public class SystemConstants {
     public static final String LOGIN_USER_KEY = "loginUser:";
 
     /**
+     * 登录用户 redis key
+     */
+    public static final String ADMIN_LOGIN_USER_KEY = "login:";
+
+    /**
      * 文章评论
      */
     public static final int ARTICLE_COMMENT = 0;

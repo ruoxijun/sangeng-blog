@@ -1,0 +1,59 @@
+package com.ruoxijun.service.impl;
+
+import com.ruoxijun.domain.entity.LoginUser;
+import com.ruoxijun.domain.entity.User;
+import com.ruoxijun.domain.vo.LoginUserVo;
+import com.ruoxijun.domain.vo.UserInfoVo;
+import com.ruoxijun.service.LoginService;
+import com.ruoxijun.utils.BeanCopyUtils;
+import com.ruoxijun.utils.JwtUtils;
+import com.ruoxijun.utils.RedisCache;
+import jakarta.annotation.Resource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+import static com.ruoxijun.constants.SystemConstants.ADMIN_LOGIN_USER_KEY;
+
+
+/**
+ * 后台登录服务实现类
+ */
+@Service
+public class AdminLoginServiceImpl implements LoginService {
+
+    @Resource
+    private AuthenticationManager authenticationManager;
+    @Resource
+    private RedisCache redisCache;
+
+    @Override
+    public LoginUserVo login(User user) {
+        // 用户认证
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
+        Authentication authenticated = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        Optional.ofNullable(authenticated).orElseThrow(() -> new RuntimeException("账号或密码错误"));
+        // 生成 jwt
+        LoginUser loginUser = (LoginUser) authenticated.getPrincipal();
+        Long id = loginUser.getUser().getId();
+        String jwt = JwtUtils.createJWT(id.toString());
+        // 用户信息存储到 redis
+        redisCache.setCacheObject(ADMIN_LOGIN_USER_KEY + id, loginUser);
+        // 返回用户登录信息
+        UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
+        return new LoginUserVo(jwt, userInfoVo);
+    }
+
+    @Override
+    public void logout() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        Long id = loginUser.getUser().getId();
+        redisCache.deleteObject(ADMIN_LOGIN_USER_KEY + id);
+    }
+}
