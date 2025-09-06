@@ -17,4 +17,6 @@ public interface TagService extends IService<Tag> {
     PageVo<TagVo> pageTagList(Integer pageNum, Integer pageSize, TagDto tagDto);
 
     TagVo addTag(TagDto tagDto);
+
+    TagVo updateTagById(Long id, TagDto tag);
 }

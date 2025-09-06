@@ -44,6 +44,15 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
         this.save(tag);
         return BeanCopyUtils.copyBean(tag, TagVo.class);
     }
+
+    @Override
+    public TagVo updateTagById(Long id, TagDto tag) {
+        Tag t = this.getById(id);
+        t.setName(tag.getName());
+        t.setRemark(tag.getRemark());
+        this.updateById(t);
+        return BeanCopyUtils.copyBean(t, TagVo.class);
+    }
 }
 
 

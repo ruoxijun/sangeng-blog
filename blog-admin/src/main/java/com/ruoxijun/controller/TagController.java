@@ -56,4 +56,19 @@ public class TagController {
         return R.ok(tagService.removeById(id));
     }
 
+    /**
+     * 修改标签
+     *
+     * @param id     标签id
+     * @param tagDto 标签信息
+     * @return 修改结果
+     */
+    @PutMapping("/{id}")
+    public R<TagVo> updateTag(@PathVariable Long id, @RequestBody TagDto tagDto) {
+        if (!StringUtils.hasText(tagDto.getName()) || !StringUtils.hasText(tagDto.getRemark())) {
+            return R.err("标签名或标签描述不能为空");
+        }
+        return R.ok(tagService.updateTagById(id, tagDto));
+    }
+
 }
