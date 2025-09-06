@@ -76,4 +76,10 @@ public class Role {
      */
     @TableField(value = "update_time")
     private Date updateTime;
+
+    /**
+     * 是否删除 (0否 1是)
+     */
+    @TableField(value = "del_flag")
+    private Integer delFlag;
 }
