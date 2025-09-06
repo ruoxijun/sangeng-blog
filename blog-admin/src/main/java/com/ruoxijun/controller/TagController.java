@@ -45,4 +45,15 @@ public class TagController {
         return R.ok(tagService.addTag(tagDto));
     }
 
+    /**
+     * 删除标签
+     *
+     * @param id 标签id
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public R<Boolean> deleteTag(@PathVariable Long id) {
+        return R.ok(tagService.removeById(id));
+    }
+
 }
