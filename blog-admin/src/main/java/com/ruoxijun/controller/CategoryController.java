@@ -1,5 +1,7 @@
 package com.ruoxijun.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.Category;
 import com.ruoxijun.domain.vo.CategoryVo;
@@ -29,7 +31,9 @@ public class CategoryController {
      */
     @GetMapping("/listAllCategory")
     public R<List<CategoryVo>> listAllCategory() {
-        List<Category> list = categoryService.list();
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Category::getStatus, SystemConstants.CATEGORY_STATUS_NORMAL);
+        List<Category> list = categoryService.list(queryWrapper);
         return R.ok(BeanCopyUtils.copyBeanList(list, CategoryVo.class));
     }
 

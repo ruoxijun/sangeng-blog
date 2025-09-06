@@ -5,9 +5,12 @@ import com.ruoxijun.domain.dto.TagDto;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.TagVo;
 import com.ruoxijun.service.TagService;
+import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 标签
@@ -69,6 +72,16 @@ public class TagController {
             return R.err("标签名或标签描述不能为空");
         }
         return R.ok(tagService.updateTagById(id, tagDto));
+    }
+
+    /**
+     * 获取所有标签
+     *
+     * @return 所有标签
+     */
+    @GetMapping("/listAllTags")
+    public R<List<TagVo>> listAllTags() {
+        return R.ok(BeanCopyUtils.copyBeanList(tagService.list(), TagVo.class));
     }
 
 }
