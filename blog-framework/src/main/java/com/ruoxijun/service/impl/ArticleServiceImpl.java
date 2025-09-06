@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
+import com.ruoxijun.domain.dto.ArticleDto;
 import com.ruoxijun.domain.entity.Article;
+import com.ruoxijun.domain.entity.ArticleTag;
 import com.ruoxijun.domain.entity.Category;
 import com.ruoxijun.domain.vo.ArticleDetailVo;
 import com.ruoxijun.domain.vo.ArticleListVo;
@@ -12,12 +14,14 @@ import com.ruoxijun.domain.vo.HotArticleVo;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.service.ArticleService;
 import com.ruoxijun.mapper.ArticleMapper;
+import com.ruoxijun.service.ArticleTagService;
 import com.ruoxijun.service.CategoryService;
 import com.ruoxijun.utils.BeanCopyUtils;
 import com.ruoxijun.utils.RedisCache;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -37,6 +41,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private CategoryService categoryService;
     @Resource
     private RedisCache redisCache;
+    @Resource
+    private ArticleTagService articleTagService;
 
     @Override
     public List<HotArticleVo> hotArticleList() {
@@ -106,6 +112,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                     .toList();
             this.updateBatchById(articleList, 50);
         }
+    }
+
+    @Transactional
+    @Override
+    public boolean addArticle(ArticleDto articleDto) {
+        // 保存文章
+        Article newArticle = BeanCopyUtils.copyBean(articleDto, Article.class);
+        this.save(newArticle);
+        // 保存文章标签
+        List<ArticleTag> tags = articleDto.getTags().stream()
+                .map(tagId -> new ArticleTag(newArticle.getId(), tagId))
+                .toList();
+        return articleTagService.saveBatch(tags);
     }
 
 }

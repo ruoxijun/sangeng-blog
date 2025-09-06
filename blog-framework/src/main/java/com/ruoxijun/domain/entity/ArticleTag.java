@@ -2,7 +2,9 @@ package com.ruoxijun.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 文章标签关联表
@@ -11,6 +13,8 @@ import lombok.Data;
  */
 @TableName(value = "article_tag")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ArticleTag {
     /**
      * 文章 id
