@@ -5,6 +5,7 @@ import com.ruoxijun.domain.entity.LoginUser;
 import com.ruoxijun.domain.entity.User;
 import com.ruoxijun.domain.vo.AdminUserInfoVo;
 import com.ruoxijun.domain.vo.LoginUserVo;
+import com.ruoxijun.domain.vo.RoutersVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.AdminLoginService;
 import com.ruoxijun.service.MenuService;
@@ -73,6 +74,17 @@ public class LoginController {
 
         UserInfoVo user = BeanCopyUtils.copyBean(loginUser.getUser(), UserInfoVo.class);
         return R.ok(new AdminUserInfoVo(user, roleKeyList, permList));
+    }
+
+    /**
+     * 获取当前用户路由信息
+     * 如果是管理员需要所有菜单类型为 C/M 的菜单
+     *
+     * @return 路由信息
+     */
+    @GetMapping("/getRouters")
+    public R<RoutersVo> getRouters() {
+        return R.ok(menuService.getRouterMenuTreeByUserId(SecurityUtils.getUserId()));
     }
 
 }

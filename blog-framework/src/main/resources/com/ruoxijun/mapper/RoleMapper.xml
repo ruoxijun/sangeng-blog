@@ -24,7 +24,7 @@
     </sql>
 
     <select id="selectRoleKeysByUserId" resultType="java.lang.String">
-        select distinct(r.role_key)
+        select distinct r.role_key
         from sys_user_role ur
                  left join sys_role r on r.id = ur.role_id
         where ur.user_id = #{id}

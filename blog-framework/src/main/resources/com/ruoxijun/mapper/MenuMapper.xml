@@ -34,12 +34,34 @@
 
     <!--  todo 角色状态未判断  -->
     <select id="selectPermsByUserId" resultType="java.lang.String">
-        select distinct(m.perms)
+        select distinct m.perms
         from sys_user_role ur
                  left join sys_role_menu rm on rm.role_id = ur.role_id
                  left join sys_menu m on m.id = rm.menu_id
         where ur.user_id = #{id}
-          and m.muen_type in ('C', 'F')
+          and m.menu_type in ('C', 'F')
+          and m.status = 0
+          and m.del_flag = 0
+    </select>
+
+    <select id="selectMenuByUserId" resultType="com.ruoxijun.domain.vo.MenuVo">
+        select distinct m.id,
+                        m.menu_name,
+                        m.parent_id,
+                        m.order_num,
+                        m.path,
+                        m.component,
+                        m.menu_type,
+                        m.visible,
+                        m.status,
+                        m.perms,
+                        m.icon,
+                        m.create_time
+        from sys_user_role ur
+                 left join sys_role_menu rm on rm.role_id = ur.role_id
+                 left join sys_menu m on m.id = rm.menu_id
+        where ur.user_id = #{id}
+          and m.menu_type in ('C', 'M')
           and m.status = 0
           and m.del_flag = 0
     </select>

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 菜单权限表
@@ -16,6 +17,7 @@ import lombok.Data;
  */
 @TableName(value = "sys_menu")
 @Data
+@Accessors(chain = true) // 链式调用
 public class Menu {
     /**
      * 菜单id
@@ -30,7 +32,7 @@ public class Menu {
     private String menuName;
 
     /**
-     * 父菜单id
+     * 父菜单id（顶级为0）
      */
     @TableField(value = "parent_id")
     private Long parentId;

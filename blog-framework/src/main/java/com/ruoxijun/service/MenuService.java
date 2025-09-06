@@ -2,6 +2,7 @@ package com.ruoxijun.service;
 
 import com.ruoxijun.domain.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoxijun.domain.vo.RoutersVo;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
 public interface MenuService extends IService<Menu> {
 
     List<String> getPermsByUserId(Long id);
+
+    RoutersVo getRouterMenuTreeByUserId(Long userId);
 }

@@ -4,11 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.entity.Menu;
+import com.ruoxijun.domain.vo.MenuVo;
+import com.ruoxijun.domain.vo.RoutersVo;
 import com.ruoxijun.service.MenuService;
 import com.ruoxijun.mapper.MenuMapper;
+import com.ruoxijun.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import static com.ruoxijun.constants.SystemConstants.*;
 
@@ -42,6 +47,45 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         }
         // 用户权限
         return this.baseMapper.selectPermsByUserId(id);
+    }
+
+    /**
+     * 获取用户路由菜单树
+     *
+     * @param userId 用户id
+     * @return 路由菜单树
+     */
+    @Override
+    public RoutersVo getRouterMenuTreeByUserId(Long userId) {
+        List<MenuVo> menuList;
+        if (ADMIN_ID == userId) {
+            // 管理员获取所有菜单
+            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.in(Menu::getMenuType, MENU_TYPE_CATALOG, MENU_TYPE_MENU)
+                    .eq(Menu::getStatus, STATUS_NORMAL);
+            menuList = BeanCopyUtils.copyBeanList(this.list(queryWrapper), MenuVo.class);
+        } else {
+            // 根据用户 id 查角色再查出所有角色的菜单
+            menuList = this.getBaseMapper().selectMenuByUserId(userId);
+        }
+        // 构建菜单树
+        return new RoutersVo(buildMenuTree(menuList, 0L));
+    }
+
+    /**
+     * 构建菜单树
+     *
+     * @param menuList 菜单列表
+     */
+    private List<MenuVo> buildMenuTree(List<MenuVo> menuList, Long parentId) {
+        return menuList.stream()
+                // 筛选出父级菜单
+                .filter(menu -> Objects.equals(menu.getParentId(), parentId))
+                // 排序
+                .sorted(Comparator.comparingInt(MenuVo::getOrderNum).reversed())
+                // 构建子菜单
+                .peek(menu -> menu.setChildren(buildMenuTree(menuList, menu.getId())))
+                .toList();
     }
 
 }

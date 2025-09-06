@@ -2,6 +2,7 @@ package com.ruoxijun.mapper;
 
 import com.ruoxijun.domain.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ruoxijun.domain.vo.MenuVo;
 
 import java.util.List;
 
@@ -20,6 +21,14 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return 用户权限
      */
     List<String> selectPermsByUserId(Long id);
+
+    /**
+     * 根据用户id查询菜单
+     *
+     * @param userId 用户id
+     * @return 菜单
+     */
+    List<MenuVo> selectMenuByUserId(Long userId);
 }
 
 
