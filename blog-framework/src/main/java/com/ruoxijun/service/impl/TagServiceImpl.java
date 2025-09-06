@@ -3,7 +3,7 @@ package com.ruoxijun.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ruoxijun.domain.dto.TagListDto;
+import com.ruoxijun.domain.dto.TagDto;
 import com.ruoxijun.domain.entity.Tag;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.TagVo;
@@ -25,15 +25,24 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag>
         implements TagService {
 
     @Override
-    public PageVo<TagVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto) {
+    public PageVo<TagVo> pageTagList(Integer pageNum, Integer pageSize, TagDto tagDto) {
         Page<Tag> page = new Page<>(pageNum, pageSize);
         LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
         // 如果提供了标签名或者标签描述，则进行查询
-        queryWrapper.eq(StringUtils.hasText(tagListDto.getName()), Tag::getName, tagListDto.getName())
-                .eq(StringUtils.hasText(tagListDto.getRemark()), Tag::getRemark, tagListDto.getRemark());
+        queryWrapper.eq(StringUtils.hasText(tagDto.getName()), Tag::getName, tagDto.getName())
+                .eq(StringUtils.hasText(tagDto.getRemark()), Tag::getRemark, tagDto.getRemark());
         Page<Tag> tagPage = this.page(page, queryWrapper);
         List<TagVo> tagList = BeanCopyUtils.copyBeanList(tagPage.getRecords(), TagVo.class);
         return new PageVo<>(tagList, tagPage.getTotal());
+    }
+
+    @Override
+    public TagVo addTag(TagDto tagDto) {
+        Tag tag = new Tag();
+        tag.setName(tagDto.getName());
+        tag.setRemark(tagDto.getRemark());
+        this.save(tag);
+        return BeanCopyUtils.copyBean(tag, TagVo.class);
     }
 }
 

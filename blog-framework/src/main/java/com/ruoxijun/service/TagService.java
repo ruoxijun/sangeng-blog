@@ -1,6 +1,6 @@
 package com.ruoxijun.service;
 
-import com.ruoxijun.domain.dto.TagListDto;
+import com.ruoxijun.domain.dto.TagDto;
 import com.ruoxijun.domain.entity.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.PageVo;
@@ -14,5 +14,7 @@ import com.ruoxijun.domain.vo.TagVo;
  */
 public interface TagService extends IService<Tag> {
 
-    PageVo<TagVo> pageTagList(Integer pageNum, Integer pageSize, TagListDto tagListDto);
+    PageVo<TagVo> pageTagList(Integer pageNum, Integer pageSize, TagDto tagDto);
+
+    TagVo addTag(TagDto tagDto);
 }
