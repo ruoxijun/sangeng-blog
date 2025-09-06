@@ -3,6 +3,16 @@ package com.ruoxijun.constants;
 public class SystemConstants {
 
     /**
+     * 管理员id
+     */
+    public static final long ADMIN_ID = 1L;
+
+    /**
+     * 管理员角色 key
+     */
+    public static final String ADMIN_KEY = "admin";
+
+    /**
      * 文章发布状态 1 已发布
      */
     public static final int ARTICLE_STATUS_PUBLISH = 1;
@@ -26,6 +36,11 @@ public class SystemConstants {
      * 默认列表分页，数据量 10 字符串
      */
     public static final String DEFAULT_PAGE_SIZE_STR = "10";
+
+    /**
+     * 状态 正常
+     */
+    public static final int STATUS_NORMAL = 0;
 
     /**
      * 分类(文章)状态 正常
@@ -66,4 +81,19 @@ public class SystemConstants {
      * 文章浏览量 redis key
      */
     public static final String ARTICLE_VIEW_COUNT_KEY = "article:viewCount";
+
+    /**
+     * 菜单类型 目录
+     */
+    public static final String MENU_TYPE_CATALOG = "M";
+
+    /**
+     * 菜单类型 菜单
+     */
+    public static final String MENU_TYPE_MENU = "C";
+
+    /**
+     * 菜单类型 按钮
+     */
+    public static final String MENU_TYPE_BUTTON = "F";
 }

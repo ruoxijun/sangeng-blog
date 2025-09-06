@@ -1,5 +1,6 @@
 package com.ruoxijun.utils;
 
+import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.entity.LoginUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +41,7 @@ public class SecurityUtils {
      */
     public static boolean isAdmin() {
         Long userId = getUserId();
-        return userId != null && 1L == userId;
+        return userId != null && SystemConstants.ADMIN_ID == userId;
     }
 
 }
