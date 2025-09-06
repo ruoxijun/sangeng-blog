@@ -39,7 +39,7 @@ public class LoginController {
      * @param user 用户登录信息
      * @return 登录用户信息
      */
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public R<LoginUserVo> login(@RequestBody User user) {
         return R.ok(adminLoginService.login(user));
     }
@@ -49,7 +49,7 @@ public class LoginController {
      *
      * @return 登出结果
      */
-    @PostMapping("/logout")
+    @PostMapping("/user/logout")
     public R<Void> logout() {
         adminLoginService.logout();
         return R.ok();
