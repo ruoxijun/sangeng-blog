@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 登录用户
@@ -20,6 +21,11 @@ public class LoginUser implements UserDetails {
      * 用户信息
      */
     private User user;
+
+    /**
+     * 权限信息
+     */
+    private List<String> permissions;
 
     @Override
     public String getPassword() {

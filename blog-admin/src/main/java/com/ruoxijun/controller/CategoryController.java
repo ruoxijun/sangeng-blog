@@ -13,6 +13,7 @@ import com.ruoxijun.utils.BeanCopyUtils;
 import com.ruoxijun.utils.WebUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,6 +49,7 @@ public class CategoryController {
      *
      * @param response http 响应对象
      */
+    @PreAuthorize("@ps.checkPermission('content:category:export')") // 校验权限
     @GetMapping("/export")
     public void export(HttpServletResponse response) {
         WebUtils.setDownloadHeader("分类.xlsx", response);

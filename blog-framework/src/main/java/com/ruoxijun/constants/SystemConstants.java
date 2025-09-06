@@ -8,6 +8,11 @@ public class SystemConstants {
     public static final long ADMIN_ID = 1L;
 
     /**
+     * user 类型-管理员
+     */
+    public static final int USER_TYPE_ADMIN = 1;
+
+    /**
      * 管理员角色 key
      */
     public static final String ADMIN_KEY = "admin";
