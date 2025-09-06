@@ -30,6 +30,7 @@ public class UploadServiceImpl implements UploadService {
         String filePath = datePath + JwtUtils.getUUID() + suffix;
         File file = new File(path + filePath);
         image.transferTo(file);
+        // todo 静态资源映射待完善
         return filePath;
     }
 
