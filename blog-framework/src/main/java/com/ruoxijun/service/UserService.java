@@ -1,5 +1,6 @@
 package com.ruoxijun.service;
 
+import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.PageVo;
@@ -19,4 +20,6 @@ public interface UserService extends IService<User> {
     UserInfoVo register(User user);
 
     PageVo<UserInfoVo> userList(Integer pageNum, Integer pageSize, String userName, String phoneNumber, Integer status);
+
+    UserInfoVo addUser(UserDto user);
 }

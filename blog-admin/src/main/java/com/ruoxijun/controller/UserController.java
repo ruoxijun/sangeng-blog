@@ -1,14 +1,12 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.UserService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_CURRENT_STR;
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_SIZE_STR;
@@ -37,6 +35,17 @@ public class UserController {
                                           @RequestParam(required = false) String phoneNumber,
                                           @RequestParam(required = false) Integer status) {
         return R.ok(userService.userList(pageNum, pageSize, userName, phoneNumber, status));
+    }
+
+    /**
+     * 添加用户
+     *
+     * @param user 用户信息
+     * @return 添加结果
+     */
+    @PostMapping
+    public R<UserInfoVo> addUser(@RequestBody UserDto user) {
+        return R.ok(userService.addUser(user));
     }
 
 }
