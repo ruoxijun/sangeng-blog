@@ -4,6 +4,7 @@ import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.UserDetailVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
 
 /**
@@ -22,4 +23,6 @@ public interface UserService extends IService<User> {
     PageVo<UserInfoVo> userList(Integer pageNum, Integer pageSize, String userName, String phoneNumber, Integer status);
 
     UserInfoVo addUser(UserDto user);
+
+    UserDetailVo getUserDetail(Long id);
 }

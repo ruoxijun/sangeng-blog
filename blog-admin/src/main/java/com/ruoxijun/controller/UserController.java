@@ -3,8 +3,10 @@ package com.ruoxijun.controller;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.UserDetailVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.UserService;
+import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +59,17 @@ public class UserController {
     @DeleteMapping("/{id}")
     public R<Boolean> deleteUser(@PathVariable Long id) {
         return R.ok(userService.removeById(id));
+    }
+
+    /**
+     * 获取用户信息（包括关联的角色id列表，和所有角色详情列表）
+     *
+     * @param id 用户id
+     * @return 用户信息
+     */
+    @GetMapping("/{id}")
+    public R<UserDetailVo> getUserDetail(@PathVariable Long id) {
+        return R.ok(userService.getUserDetail(id));
     }
 
 }

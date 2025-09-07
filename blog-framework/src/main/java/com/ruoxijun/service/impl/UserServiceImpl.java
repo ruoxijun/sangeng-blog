@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.dto.UserDto;
+import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.entity.User;
 import com.ruoxijun.domain.entity.UserRole;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.UserDetailVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
+import com.ruoxijun.service.RoleService;
 import com.ruoxijun.service.UserRoleService;
 import com.ruoxijun.service.UserService;
 import com.ruoxijun.mapper.UserMapper;
@@ -21,6 +25,8 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.ruoxijun.constants.SystemConstants.STATUS_NORMAL;
 
 /**
  * @author ruoxijun
@@ -35,6 +41,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
     @Resource
     private UserRoleService userRoleService;
+    @Resource
+    private RoleService roleService;
 
     @Override
     public UserInfoVo userInfo() {
@@ -94,6 +102,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 .toList();
         userRoleService.saveBatch(userRoleList);
         return BeanCopyUtils.copyBean(newUser, UserInfoVo.class);
+    }
+
+    @Override
+    public UserDetailVo getUserDetail(Long id) {
+        // 获取用户信息
+        UserInfoVo user = BeanCopyUtils.copyBean(this.getById(id), UserInfoVo.class);
+        // 获取用户关联角色id列表
+        List<Long> roleIds = userRoleService.list(
+                        new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, id)
+                ).stream()
+                .map(UserRole::getRoleId)
+                .toList();
+        // 获取所有角色列表
+        List<Role> roles = roleService.list(new LambdaQueryWrapper<Role>().eq(Role::getStatus, STATUS_NORMAL));
+        return new UserDetailVo(user, roleIds, roles);
     }
 
 }
