@@ -105,7 +105,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
 
     @Override
     public List<MenuVo> treeSelect() {
-        List<MenuVo> list = BeanCopyUtils.copyBeanList(this.list(), MenuVo.class);
+        List<MenuVo> list = BeanCopyUtils.copyBeanList(this.list(
+                new LambdaQueryWrapper<Menu>().eq(Menu::getStatus, STATUS_NORMAL)
+        ), MenuVo.class);
         return this.buildMenuTree(list, 0L);
     }
 
