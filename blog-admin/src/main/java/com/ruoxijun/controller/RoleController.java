@@ -1,13 +1,12 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.RoleStatusDto;
 import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.service.RoleService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,6 +38,22 @@ public class RoleController {
                                 @RequestParam(required = false) String roleName,
                                 @RequestParam(required = false) Integer status) {
         return R.ok(roleService.roleList(pageNum, pageSize, roleName, status));
+    }
+
+    /**
+     * 角色状态修改
+     *
+     * @param role 角色
+     * @return 修改结果
+     */
+    @PutMapping("/changeStatus")
+    public R<Boolean> changeStatus(@RequestBody RoleStatusDto role) {
+        return R.ok(
+                roleService.lambdaUpdate()
+                        .eq(Role::getId, role.getId())
+                        .set(Role::getStatus, role.getStatus())
+                        .update()
+        );
     }
 
 }
