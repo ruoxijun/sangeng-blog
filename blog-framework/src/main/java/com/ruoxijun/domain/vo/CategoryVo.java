@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 /**
  * 分类响应实体类
  */
@@ -27,5 +25,10 @@ public class CategoryVo {
      * 描述
      */
     private String description;
+
+    /**
+     * 状态：0正常，1禁用
+     */
+    private Integer status;
 
 }
