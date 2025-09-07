@@ -1,5 +1,6 @@
 package com.ruoxijun.service;
 
+import com.ruoxijun.domain.dto.LinksDto;
 import com.ruoxijun.domain.entity.Links;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.LinksVo;
@@ -17,4 +18,6 @@ public interface LinksService extends IService<Links> {
     List<LinksVo> getAllLink();
 
     PageVo<LinksVo> linkList(Integer pageNum, Integer pageSize, String name, Integer status);
+
+    Links addLink(LinksDto linksDto);
 }

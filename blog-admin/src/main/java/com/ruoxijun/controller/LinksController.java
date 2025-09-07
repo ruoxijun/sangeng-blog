@@ -1,15 +1,13 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.LinksDto;
 import com.ruoxijun.domain.entity.Links;
 import com.ruoxijun.domain.vo.LinksVo;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.service.LinksService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_CURRENT_STR;
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_SIZE_STR;
@@ -39,6 +37,17 @@ public class LinksController {
                                        @RequestParam(required = false) String name,
                                        @RequestParam(required = false) Integer status) {
         return R.ok(linksService.linkList(pageNum, pageSize, name, status));
+    }
+
+    /**
+     * 新增友链
+     *
+     * @param linksDto 友链
+     * @return 新增的友链
+     */
+    @PostMapping
+    public R<Links> addLink(@RequestBody LinksDto linksDto) {
+        return R.ok(linksService.addLink(linksDto));
     }
 
 }

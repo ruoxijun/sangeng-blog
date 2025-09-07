@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
+import com.ruoxijun.domain.dto.LinksDto;
 import com.ruoxijun.domain.entity.Links;
 import com.ruoxijun.domain.vo.LinksVo;
 import com.ruoxijun.domain.vo.PageVo;
@@ -42,6 +43,13 @@ public class LinksServiceImpl extends ServiceImpl<LinksMapper, Links>
         Page<Links> linksPage = this.page(page, queryWrapper);
         List<LinksVo> linksList = BeanCopyUtils.copyBeanList(linksPage.getRecords(), LinksVo.class);
         return new PageVo<>(linksList, linksPage.getTotal());
+    }
+
+    @Override
+    public Links addLink(LinksDto linksDto) {
+        Links links = BeanCopyUtils.copyBean(linksDto, Links.class);
+        this.save(links);
+        return links;
     }
 }
 
