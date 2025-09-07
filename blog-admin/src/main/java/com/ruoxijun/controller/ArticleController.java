@@ -32,6 +32,15 @@ public class ArticleController {
         return R.ok(articleService.addArticle(article));
     }
 
+    /**
+     * 文章列表
+     *
+     * @param pageNum  当前页
+     * @param pageSize 每页显示数量
+     * @param title    标题
+     * @param summary  摘要
+     * @return 文章分页列表
+     */
     @GetMapping("/list")
     public R<PageVo<articleContentListVo>> articleContentList(
             @RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
