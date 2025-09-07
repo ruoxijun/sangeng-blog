@@ -63,6 +63,12 @@ public class ArticleController {
         return R.ok(articleService.articleDetail(id));
     }
 
+    /**
+     * 修改文章
+     *
+     * @param article 文章
+     * @return 修改成功
+     */
     @PutMapping
     public R<Boolean> updateArticle(UpdateArticleDto article) {
         return R.ok(articleService.updateArticle(article));
