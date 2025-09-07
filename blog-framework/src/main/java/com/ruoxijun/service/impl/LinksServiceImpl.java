@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.dto.LinksDto;
+import com.ruoxijun.domain.dto.UpdateLinksDto;
 import com.ruoxijun.domain.entity.Links;
 import com.ruoxijun.domain.vo.LinksVo;
 import com.ruoxijun.domain.vo.PageVo;
@@ -50,6 +51,11 @@ public class LinksServiceImpl extends ServiceImpl<LinksMapper, Links>
         Links links = BeanCopyUtils.copyBean(linksDto, Links.class);
         this.save(links);
         return links;
+    }
+
+    @Override
+    public boolean updateLink(UpdateLinksDto linksDto) {
+        return this.updateById(BeanCopyUtils.copyBean(linksDto, Links.class));
     }
 }
 

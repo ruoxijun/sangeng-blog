@@ -2,6 +2,7 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.LinksDto;
+import com.ruoxijun.domain.dto.UpdateLinksDto;
 import com.ruoxijun.domain.entity.Links;
 import com.ruoxijun.domain.vo.LinksVo;
 import com.ruoxijun.domain.vo.PageVo;
@@ -59,6 +60,28 @@ public class LinksController {
     @DeleteMapping("/{id}")
     public R<Boolean> deleteLink(@PathVariable Long id) {
         return R.ok(linksService.removeById(id));
+    }
+
+    /**
+     * 根据id查询友链
+     *
+     * @param id 友链id
+     * @return 友链
+     */
+    @GetMapping("/{id}")
+    public R<Links> getLink(@PathVariable Long id) {
+        return R.ok(linksService.getById(id));
+    }
+
+    /**
+     * 修改友链
+     *
+     * @param linksDto 友链信息
+     * @return 修改结果
+     */
+    @PutMapping
+    public R<Boolean> updateLink(@RequestBody UpdateLinksDto linksDto) {
+        return R.ok(linksService.updateLink(linksDto));
     }
 
 }
