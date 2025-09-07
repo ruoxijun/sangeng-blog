@@ -50,4 +50,15 @@ public class LinksController {
         return R.ok(linksService.addLink(linksDto));
     }
 
+    /**
+     * 删除友链
+     *
+     * @param id 友链id
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public R<Boolean> deleteLink(@PathVariable Long id) {
+        return R.ok(linksService.removeById(id));
+    }
+
 }
