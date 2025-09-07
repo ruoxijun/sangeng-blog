@@ -1,6 +1,7 @@
 package com.ruoxijun.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.dto.RoleStatusDto;
@@ -14,6 +15,8 @@ import com.ruoxijun.service.RoleService;
 import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_CURRENT_STR;
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_SIZE_STR;
@@ -117,6 +120,16 @@ public class RoleController {
     public R<Boolean> deleteRole(@PathVariable Long id) {
         roleMenuService.remove(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, id));
         return R.ok(roleService.removeById(id));
+    }
+
+    @GetMapping("/listAllRole")
+    public R<List<Role>> listAllRole() {
+        return R.ok(
+                roleService.list(
+                        new LambdaQueryWrapper<Role>()
+                                .eq(Role::getStatus, SystemConstants.STATUS_NORMAL)
+                )
+        );
     }
 
 }
