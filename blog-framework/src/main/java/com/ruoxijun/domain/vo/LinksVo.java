@@ -35,4 +35,9 @@ public class LinksVo {
      * 友链地址
      */
     private String address;
+
+    /**
+     * 审核状态 (0通过，1未通过，2未审核)
+     */
+    private Integer status;
 }

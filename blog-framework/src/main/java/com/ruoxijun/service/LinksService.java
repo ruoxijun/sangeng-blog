@@ -3,6 +3,7 @@ package com.ruoxijun.service;
 import com.ruoxijun.domain.entity.Links;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.LinksVo;
+import com.ruoxijun.domain.vo.PageVo;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
 public interface LinksService extends IService<Links> {
 
     List<LinksVo> getAllLink();
+
+    PageVo<LinksVo> linkList(Integer pageNum, Integer pageSize, String name, Integer status);
 }
