@@ -1,12 +1,15 @@
 package com.ruoxijun.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.dto.RoleStatusDto;
 import com.ruoxijun.domain.dto.UpdateRoleDto;
 import com.ruoxijun.domain.entity.Role;
+import com.ruoxijun.domain.entity.RoleMenu;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.RoleMenuTreeSelectVo;
+import com.ruoxijun.service.RoleMenuService;
 import com.ruoxijun.service.RoleService;
 import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
@@ -24,6 +27,8 @@ public class RoleController {
 
     @Resource
     private RoleService roleService;
+    @Resource
+    private RoleMenuService roleMenuService;
 
     /**
      * 角色列表
@@ -100,6 +105,18 @@ public class RoleController {
     @PutMapping
     public R<Boolean> updateRole(@RequestBody UpdateRoleDto role) {
         return R.ok(roleService.updateRole(role));
+    }
+
+    /**
+     * 删除角色
+     *
+     * @param id 角色ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public R<Boolean> deleteRole(@PathVariable Long id) {
+        roleMenuService.remove(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, id));
+        return R.ok(roleService.removeById(id));
     }
 
 }

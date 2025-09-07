@@ -93,9 +93,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         // 更新角色信息
         this.save(BeanCopyUtils.copyBean(role, Role.class));
         // 删除角色权限信息
-        LambdaQueryWrapper<RoleMenu> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(RoleMenu::getRoleId, role.getId());
-        roleMenuService.remove(queryWrapper);
+        roleMenuService.remove(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getId()));
         // 添加角色权限信息
         List<RoleMenu> roleMenuList = role.getMenuIds().stream()
                 .map(menuId -> new RoleMenu(role.getId(), menuId))
