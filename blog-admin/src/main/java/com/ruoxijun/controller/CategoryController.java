@@ -15,10 +15,7 @@ import com.ruoxijun.utils.WebUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -85,6 +82,17 @@ public class CategoryController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer status) {
         return categoryService.categoryList(pageNum, pageSize, name, status);
+    }
+
+    /**
+     * 删除分类
+     *
+     * @param id 分类ID
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Long id) {
+        return categoryService.removeById(id);
     }
 
 
