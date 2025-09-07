@@ -107,4 +107,15 @@ public class CategoryController {
         return R.ok(categoryService.addCategory(category));
     }
 
+    @GetMapping("/{id}")
+    public R<Category> getCategory(@PathVariable Long id) {
+        return R.ok(categoryService.getById(id));
+    }
+
+    @PutMapping("/{id}")
+    public R<Void> updateCategory(@RequestBody Category category) {
+        categoryService.updateById(category);
+        return R.ok();
+    }
+
 }
