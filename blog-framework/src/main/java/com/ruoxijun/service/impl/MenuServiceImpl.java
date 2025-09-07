@@ -10,6 +10,7 @@ import com.ruoxijun.service.MenuService;
 import com.ruoxijun.mapper.MenuMapper;
 import com.ruoxijun.utils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Comparator;
 import java.util.List;
@@ -86,6 +87,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
                 // 构建子菜单
                 .peek(menu -> menu.setChildren(buildMenuTree(menuList, menu.getId())))
                 .toList();
+    }
+
+    @Override
+    public List<Menu> menuList(String menuName, Integer status) {
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.hasText(menuName), Menu::getMenuName, menuName)
+                .eq(Objects.nonNull(status), Menu::getStatus, status)
+                .orderByAsc(Menu::getParentId, Menu::getOrderNum);
+        return this.list();
     }
 
 }

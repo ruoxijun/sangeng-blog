@@ -16,4 +16,6 @@ public interface MenuService extends IService<Menu> {
     List<String> getPermsByUserId(Long id);
 
     RoutersVo getRouterMenuTreeByUserId(Long userId);
+
+    List<Menu> menuList(String menuName, Integer status);
 }
