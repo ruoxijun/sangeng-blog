@@ -18,4 +18,6 @@ public interface MenuService extends IService<Menu> {
     RoutersVo getRouterMenuTreeByUserId(Long userId);
 
     List<Menu> menuList(String menuName, Integer status);
+
+    boolean hasChildren(Long id);
 }

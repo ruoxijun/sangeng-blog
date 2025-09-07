@@ -98,6 +98,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         return this.list();
     }
 
+    @Override
+    public boolean hasChildren(Long id) {
+        return this.count(new LambdaQueryWrapper<Menu>().eq(Menu::getParentId, id)) > 0;
+    }
+
 }
 
 
