@@ -7,7 +7,10 @@ import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.entity.RoleMenu;
+import com.ruoxijun.domain.vo.MenuVo;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.RoleMenuTreeSelectVo;
+import com.ruoxijun.service.MenuService;
 import com.ruoxijun.service.RoleMenuService;
 import com.ruoxijun.service.RoleService;
 import com.ruoxijun.mapper.RoleMapper;
@@ -33,6 +36,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
     @Resource
     private RoleMenuService roleMenuService;
+    @Resource
+    private MenuService menuService;
 
     /**
      * 根据用户id查询角色 key
@@ -68,6 +73,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
                 .map(menuId -> new RoleMenu(newRole.getId(), menuId))
                 .toList();
         return roleMenuService.saveBatch(roleMenuList);
+    }
+
+    @Override
+    public RoleMenuTreeSelectVo roleMenuTreeSelect(Long id) {
+        List<MenuVo> menuVos = menuService.treeSelect();
+        List<Long> checkedKeys = roleMenuService.lambdaQuery()
+                .eq(RoleMenu::getRoleId, id)
+                .list().stream()
+                .map(RoleMenu::getMenuId)
+                .toList();
+        return new RoleMenuTreeSelectVo(menuVos, checkedKeys);
     }
 
 }

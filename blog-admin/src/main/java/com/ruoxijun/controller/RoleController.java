@@ -3,13 +3,14 @@ package com.ruoxijun.controller;
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.dto.RoleStatusDto;
+import com.ruoxijun.domain.dto.UpdateRoleDto;
 import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.RoleMenuTreeSelectVo;
 import com.ruoxijun.service.RoleService;
+import com.ruoxijun.utils.BeanCopyUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_CURRENT_STR;
 import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_SIZE_STR;
@@ -66,6 +67,35 @@ public class RoleController {
     @PostMapping
     public R<Boolean> addRole(@RequestBody RoleDto role) {
         return R.ok(roleService.addRole(role));
+    }
+
+    /**
+     * 获取角色信息
+     *
+     * @param id 角色id
+     * @return 角色信息
+     */
+    @GetMapping("/{id}")
+    public R<Role> getRole(@PathVariable Long id) {
+        return R.ok(roleService.getById(id));
+    }
+
+    /**
+     * 角色菜单对应树结构
+     *
+     * @param id 角色id
+     * @return 角色菜单对应树结构
+     */
+    @GetMapping("/roleMenuTreeselect/{id}")
+    public R<RoleMenuTreeSelectVo> roleMenuTreeSelect(@PathVariable Long id) {
+        return R.ok(roleService.roleMenuTreeSelect(id));
+    }
+
+    @PutMapping
+    public R<Boolean> updateRole(@RequestBody UpdateRoleDto role) {
+        return R.ok(
+                roleService.save(BeanCopyUtils.copyBean(role, Role.class))
+        );
     }
 
 }

@@ -4,6 +4,7 @@ import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.RoleMenuTreeSelectVo;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface RoleService extends IService<Role> {
     PageVo<Role> roleList(Integer pageNum, Integer pageSize, String roleName, Integer status);
 
     boolean addRole(RoleDto role);
+
+    RoleMenuTreeSelectVo roleMenuTreeSelect(Long id);
 }
