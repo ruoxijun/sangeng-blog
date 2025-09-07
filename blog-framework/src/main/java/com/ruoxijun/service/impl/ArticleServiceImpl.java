@@ -87,9 +87,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Long categoryId = article.getCategoryId();
         Optional<Category> categoryOptional = categoryService.getOptById(categoryId);
         categoryOptional.ifPresent(category -> article.setCategoryName(category.getName()));
+        // 获取文章标签
+        LambdaQueryWrapper<ArticleTag> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ArticleTag::getArticleId, id);
+        List<Long> tags = articleTagService.list(queryWrapper).stream()
+                .map(ArticleTag::getTagId)
+                .toList();
         // 获取浏览次数
         article.setViewCount(updateViewCount(id));
-        return BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        articleDetailVo.setTags(tags);
+        return articleDetailVo;
     }
 
     @Override

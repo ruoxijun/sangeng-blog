@@ -2,6 +2,7 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.ArticleDto;
+import com.ruoxijun.domain.vo.ArticleDetailVo;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.articleContentListVo;
 import com.ruoxijun.service.ArticleService;
@@ -48,6 +49,17 @@ public class ArticleController {
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String summary) {
         return R.ok(articleService.articleContentList(pageNum, pageSize, title, summary));
+    }
+
+    /**
+     * 获取文章详情
+     *
+     * @param id 文章id
+     * @return 文章详情
+     */
+    @GetMapping("/{id}")
+    public R<ArticleDetailVo> articleDetail(@PathVariable Long id) {
+        return R.ok(articleService.articleDetail(id));
     }
 
 }

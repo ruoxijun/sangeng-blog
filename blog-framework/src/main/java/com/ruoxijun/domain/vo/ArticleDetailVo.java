@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章详情
@@ -35,6 +36,16 @@ public class ArticleDetailVo {
     private String content;
 
     /**
+     * 缩略图
+     */
+    private String cover;
+
+    /**
+     * 文章摘要
+     */
+    private String description;
+
+    /**
      * 文章标题
      */
     private String title;
@@ -45,8 +56,48 @@ public class ArticleDetailVo {
     private Long viewCount;
 
     /**
+     * 是否置顶 (0否 1是）
+     */
+    private Integer isTop;
+
+    /**
+     * 是否推荐 (0否 1是)
+     */
+    private Integer isRecommend;
+
+    /**
+     * 状态 (1公开 2私密 3评论可见)
+     */
+    private Integer status;
+
+    /**
+     * 作者id
+     */
+    private Long createBy;
+
+    /**
      * 发表时间
      */
     private Date createTime;
+
+    /**
+     * 修改者 id
+     */
+    private Long updateBy;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
+    /**
+     * 是否删除 (0否 1是)
+     */
+    private Integer delFlag;
+
+    /**
+     * 标签id列表
+     */
+    private List<Long> tags;
 
 }
