@@ -4,11 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
+import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.entity.Role;
+import com.ruoxijun.domain.entity.RoleMenu;
 import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.service.RoleMenuService;
 import com.ruoxijun.service.RoleService;
 import com.ruoxijun.mapper.RoleMapper;
+import com.ruoxijun.utils.BeanCopyUtils;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -24,6 +30,9 @@ import static com.ruoxijun.constants.SystemConstants.ADMIN_KEY;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         implements RoleService {
+
+    @Resource
+    private RoleMenuService roleMenuService;
 
     /**
      * 根据用户id查询角色 key
@@ -48,6 +57,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         Page<Role> page = new Page<>(pageNum, pageSize);
         Page<Role> rolePage = this.page(page, queryWrapper);
         return new PageVo<>(rolePage.getRecords(), rolePage.getTotal());
+    }
+
+    @Override
+    @Transactional
+    public boolean addRole(RoleDto role) {
+        Role newRole = BeanCopyUtils.copyBean(role, Role.class);
+        this.save(newRole);
+        List<RoleMenu> roleMenuList = role.getMenuIds().stream()
+                .map(menuId -> new RoleMenu(newRole.getId(), menuId))
+                .toList();
+        return roleMenuService.saveBatch(roleMenuList);
     }
 
 }

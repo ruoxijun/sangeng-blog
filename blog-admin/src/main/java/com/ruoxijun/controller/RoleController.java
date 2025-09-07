@@ -1,6 +1,7 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.RoleDto;
 import com.ruoxijun.domain.dto.RoleStatusDto;
 import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.vo.PageVo;
@@ -54,6 +55,17 @@ public class RoleController {
                         .set(Role::getStatus, role.getStatus())
                         .update()
         );
+    }
+
+    /**
+     * 添加角色
+     *
+     * @param role 角色
+     * @return 添加结果
+     */
+    @PostMapping
+    public R<Boolean> addRole(@RequestBody RoleDto role) {
+        return R.ok(roleService.addRole(role));
     }
 
 }
