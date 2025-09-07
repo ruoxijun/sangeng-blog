@@ -122,6 +122,11 @@ public class RoleController {
         return R.ok(roleService.removeById(id));
     }
 
+    /**
+     * 获取所有角色
+     *
+     * @return 所有角色
+     */
     @GetMapping("/listAllRole")
     public R<List<Role>> listAllRole() {
         return R.ok(
