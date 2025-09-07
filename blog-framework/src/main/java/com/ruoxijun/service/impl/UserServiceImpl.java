@@ -1,8 +1,11 @@
 package com.ruoxijun.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.domain.entity.User;
+import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.UserInfoVo;
 import com.ruoxijun.service.UserService;
 import com.ruoxijun.mapper.UserMapper;
@@ -10,6 +13,10 @@ import com.ruoxijun.utils.BeanCopyUtils;
 import com.ruoxijun.utils.SecurityUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author ruoxijun
@@ -51,6 +58,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         u.setEmail(user.getEmail());
         userMapper.insert(u);
         return BeanCopyUtils.copyBean(u, UserInfoVo.class);
+    }
+
+    @Override
+    public PageVo<UserInfoVo> userList(Integer pageNum,
+                                       Integer pageSize,
+                                       String userName,
+                                       String phoneNumber,
+                                       Integer status) {
+        LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.hasText(userName), User::getUserName, userName) // 用户名
+                .like(StringUtils.hasText(phoneNumber), User::getPhoneNumber, phoneNumber) // 手机号
+                .eq(Objects.nonNull(status), User::getStatus, status); // 状态
+        Page<User> page = new Page<>(pageNum, pageSize);
+        Page<User> userPage = this.page(page, queryWrapper);
+        List<UserInfoVo> userList = BeanCopyUtils.copyBeanList(userPage.getRecords(), UserInfoVo.class);
+        return new PageVo<>(userList, userPage.getTotal());
     }
 
 }
