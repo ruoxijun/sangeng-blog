@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.dto.ArticleDto;
+import com.ruoxijun.domain.dto.UpdateArticleDto;
 import com.ruoxijun.domain.entity.Article;
 import com.ruoxijun.domain.entity.ArticleTag;
 import com.ruoxijun.domain.entity.Category;
@@ -137,7 +138,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public PageVo<articleContentListVo> articleContentList(Integer pageNum,
+    public PageVo<ArticleContentListVo> articleContentList(Integer pageNum,
                                                            Integer pageSize,
                                                            String title,
                                                            String summary) {
@@ -157,8 +158,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             article.setCategoryName(category.getName());
         });
 
-        List<articleContentListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, articleContentListVo.class);
+        List<ArticleContentListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, ArticleContentListVo.class);
         return new PageVo<>(articleListVos, page.getTotal());
+    }
+
+    @Override
+    public boolean updateArticle(UpdateArticleDto article) {
+        // 更新文章
+        Article newArticle = BeanCopyUtils.copyBean(article, Article.class);
+        this.updateById(newArticle);
+        // 删除原文章标签
+        articleTagService.remove(new LambdaQueryWrapper<ArticleTag>().eq(ArticleTag::getArticleId, article.getId()));
+        // 保存新文章标签
+        List<ArticleTag> tags = article.getTags().stream()
+                .map(tagId -> new ArticleTag(article.getId(), tagId))
+                .toList();
+        return articleTagService.saveBatch(tags);
     }
 
 }

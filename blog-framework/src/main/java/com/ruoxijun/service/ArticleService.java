@@ -1,6 +1,7 @@
 package com.ruoxijun.service;
 
 import com.ruoxijun.domain.dto.ArticleDto;
+import com.ruoxijun.domain.dto.UpdateArticleDto;
 import com.ruoxijun.domain.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.*;
@@ -26,5 +27,7 @@ public interface ArticleService extends IService<Article> {
 
     boolean addArticle(ArticleDto article);
 
-    PageVo<articleContentListVo> articleContentList(Integer pageNum, Integer pageSize, String title, String summary);
+    PageVo<ArticleContentListVo> articleContentList(Integer pageNum, Integer pageSize, String title, String summary);
+
+    boolean updateArticle(UpdateArticleDto article);
 }

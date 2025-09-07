@@ -2,9 +2,10 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.ArticleDto;
+import com.ruoxijun.domain.dto.UpdateArticleDto;
 import com.ruoxijun.domain.vo.ArticleDetailVo;
 import com.ruoxijun.domain.vo.PageVo;
-import com.ruoxijun.domain.vo.articleContentListVo;
+import com.ruoxijun.domain.vo.ArticleContentListVo;
 import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +44,7 @@ public class ArticleController {
      * @return 文章分页列表
      */
     @GetMapping("/list")
-    public R<PageVo<articleContentListVo>> articleContentList(
+    public R<PageVo<ArticleContentListVo>> articleContentList(
             @RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_STR) Integer pageSize,
             @RequestParam(required = false) String title,
@@ -60,6 +61,11 @@ public class ArticleController {
     @GetMapping("/{id}")
     public R<ArticleDetailVo> articleDetail(@PathVariable Long id) {
         return R.ok(articleService.articleDetail(id));
+    }
+
+    @PutMapping
+    public R<Boolean> updateArticle(UpdateArticleDto article) {
+        return R.ok(articleService.updateArticle(article));
     }
 
 }
