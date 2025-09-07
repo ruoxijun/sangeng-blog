@@ -2,6 +2,7 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.Menu;
+import com.ruoxijun.domain.vo.MenuVo;
 import com.ruoxijun.service.MenuService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +79,16 @@ public class MenuController {
             return R.err("存在子菜单，无法删除");
         }
         return R.ok(menuService.removeById(id));
+    }
+
+    /**
+     * 获取菜单树形列表
+     *
+     * @return 菜单树形列表
+     */
+    @GetMapping("/treeselect")
+    public R<List<MenuVo>> treeSelect() {
+        return R.ok(menuService.treeSelect());
     }
 
 }

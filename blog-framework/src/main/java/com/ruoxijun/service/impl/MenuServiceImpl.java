@@ -103,6 +103,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>
         return this.count(new LambdaQueryWrapper<Menu>().eq(Menu::getParentId, id)) > 0;
     }
 
+    @Override
+    public List<MenuVo> treeSelect() {
+        List<MenuVo> list = BeanCopyUtils.copyBeanList(this.list(), MenuVo.class);
+        return this.buildMenuTree(list, 0L);
+    }
+
 }
 
 
