@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
+import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.CategoryDto;
 import com.ruoxijun.domain.entity.Article;
 import com.ruoxijun.domain.entity.Category;
 import com.ruoxijun.domain.vo.CategoryListVo;
@@ -56,6 +58,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         Page<Category> categoryPage = this.page(page, queryWrapper);
         List<CategoryVo> categoryList = BeanCopyUtils.copyBeanList(categoryPage.getRecords(), CategoryVo.class);
         return new PageVo<>(categoryList, categoryPage.getTotal());
+    }
+
+    @Override
+    public Category addCategory(CategoryDto category) {
+        Category newCategory = BeanCopyUtils.copyBean(category, Category.class);
+        this.save(newCategory);
+        return newCategory;
     }
 
 }

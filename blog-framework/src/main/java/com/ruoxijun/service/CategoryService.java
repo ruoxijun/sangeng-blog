@@ -1,5 +1,7 @@
 package com.ruoxijun.service;
 
+import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.CategoryDto;
 import com.ruoxijun.domain.entity.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoxijun.domain.vo.CategoryListVo;
@@ -18,4 +20,6 @@ public interface CategoryService extends IService<Category> {
     List<CategoryListVo> getCategoryList();
 
     PageVo<CategoryVo> categoryList(Integer pageNum, Integer pageSize, String name, Integer status);
+
+    Category addCategory(CategoryDto category);
 }

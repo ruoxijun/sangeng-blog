@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.CategoryDto;
 import com.ruoxijun.domain.entity.Category;
 import com.ruoxijun.domain.vo.CategoryVo;
 import com.ruoxijun.domain.vo.ExcelCategoryVo;
@@ -95,5 +96,15 @@ public class CategoryController {
         return categoryService.removeById(id);
     }
 
+    /**
+     * 新增 分类
+     *
+     * @param category 分类
+     * @return 新增的 分类
+     */
+    @PostMapping
+    public R<Category> addCategory(@RequestBody CategoryDto category) {
+        return R.ok(categoryService.addCategory(category));
+    }
 
 }
