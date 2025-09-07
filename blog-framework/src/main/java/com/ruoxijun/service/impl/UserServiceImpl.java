@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
+import com.ruoxijun.domain.dto.UpdateUserDto;
 import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.entity.User;
@@ -117,6 +118,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 获取所有角色列表
         List<Role> roles = roleService.list(new LambdaQueryWrapper<Role>().eq(Role::getStatus, STATUS_NORMAL));
         return new UserDetailVo(user, roleIds, roles);
+    }
+
+    @Override
+    public boolean updateUser(UpdateUserDto user) {
+        userRoleService.remove(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId()));
+        List<UserRole> userRoleList = user.getRoleIds().stream()
+                .map(roleId -> new UserRole(user.getId(), roleId))
+                .toList();
+        userRoleService.saveBatch(userRoleList);
+        return this.save(BeanCopyUtils.copyBean(user, User.class));
     }
 
 }

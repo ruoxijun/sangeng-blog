@@ -1,6 +1,7 @@
 package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
+import com.ruoxijun.domain.dto.UpdateUserDto;
 import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.domain.vo.UserDetailVo;
@@ -70,6 +71,17 @@ public class UserController {
     @GetMapping("/{id}")
     public R<UserDetailVo> getUserDetail(@PathVariable Long id) {
         return R.ok(userService.getUserDetail(id));
+    }
+
+    /**
+     * 修改用户信息
+     *
+     * @param user 用户信息
+     * @return 修改结果
+     */
+    @PutMapping
+    public R<Boolean> updateUser(@RequestBody UpdateUserDto user) {
+        return R.ok(userService.updateUser(user));
     }
 
 }

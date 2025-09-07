@@ -1,5 +1,6 @@
 package com.ruoxijun.service;
 
+import com.ruoxijun.domain.dto.UpdateUserDto;
 import com.ruoxijun.domain.dto.UserDto;
 import com.ruoxijun.domain.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -25,4 +26,6 @@ public interface UserService extends IService<User> {
     UserInfoVo addUser(UserDto user);
 
     UserDetailVo getUserDetail(Long id);
+
+    boolean updateUser(UpdateUserDto user);
 }
