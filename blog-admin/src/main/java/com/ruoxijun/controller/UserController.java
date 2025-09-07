@@ -48,4 +48,15 @@ public class UserController {
         return R.ok(userService.addUser(user));
     }
 
+    /**
+     * 删除用户
+     *
+     * @param id 用户id
+     * @return 删除结果
+     */
+    @DeleteMapping("/{id}")
+    public R<Boolean> deleteUser(@PathVariable Long id) {
+        return R.ok(userService.removeById(id));
+    }
+
 }
