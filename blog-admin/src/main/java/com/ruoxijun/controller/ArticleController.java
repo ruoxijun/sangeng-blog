@@ -2,11 +2,14 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.dto.ArticleDto;
+import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.articleContentListVo;
 import com.ruoxijun.service.ArticleService;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_CURRENT_STR;
+import static com.ruoxijun.constants.SystemConstants.DEFAULT_PAGE_SIZE_STR;
 
 /**
  * 文章管理
@@ -27,6 +30,15 @@ public class ArticleController {
     @PostMapping
     public R<Boolean> addArticle(ArticleDto article) {
         return R.ok(articleService.addArticle(article));
+    }
+
+    @GetMapping("/list")
+    public R<PageVo<articleContentListVo>> articleContentList(
+            @RequestParam(defaultValue = DEFAULT_PAGE_CURRENT_STR) Integer pageNum,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE_STR) Integer pageSize,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String summary) {
+        return R.ok(articleService.articleContentList(pageNum, pageSize, title, summary));
     }
 
 }

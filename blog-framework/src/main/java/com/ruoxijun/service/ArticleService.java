@@ -3,10 +3,7 @@ package com.ruoxijun.service;
 import com.ruoxijun.domain.dto.ArticleDto;
 import com.ruoxijun.domain.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ruoxijun.domain.vo.ArticleDetailVo;
-import com.ruoxijun.domain.vo.ArticleListVo;
-import com.ruoxijun.domain.vo.HotArticleVo;
-import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.*;
 
 import java.util.List;
 
@@ -28,4 +25,6 @@ public interface ArticleService extends IService<Article> {
     void updateArticleViewCountAll();
 
     boolean addArticle(ArticleDto article);
+
+    PageVo<articleContentListVo> articleContentList(Integer pageNum, Integer pageSize, String title, String summary);
 }

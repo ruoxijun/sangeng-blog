@@ -8,10 +8,7 @@ import com.ruoxijun.domain.dto.ArticleDto;
 import com.ruoxijun.domain.entity.Article;
 import com.ruoxijun.domain.entity.ArticleTag;
 import com.ruoxijun.domain.entity.Category;
-import com.ruoxijun.domain.vo.ArticleDetailVo;
-import com.ruoxijun.domain.vo.ArticleListVo;
-import com.ruoxijun.domain.vo.HotArticleVo;
-import com.ruoxijun.domain.vo.PageVo;
+import com.ruoxijun.domain.vo.*;
 import com.ruoxijun.service.ArticleService;
 import com.ruoxijun.mapper.ArticleMapper;
 import com.ruoxijun.service.ArticleTagService;
@@ -22,6 +19,7 @@ import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -58,21 +56,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public PageVo<ArticleListVo> articleList(Integer pageNum, Integer pageSize, Long categoryId) {
-        Page<Article> articlePage = new Page<>(pageNum, pageSize);
+        // 创建查询条件
         LambdaQueryWrapper<Article> articleQueryWrapper = new LambdaQueryWrapper<>();
-        articleQueryWrapper.eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_PUBLISH);
         boolean condition = Objects.nonNull(categoryId) && categoryId > 0;
-        articleQueryWrapper.eq(condition, Article::getCategoryId, categoryId);
-        articleQueryWrapper.orderByDesc(Article::getIsTop);
+        articleQueryWrapper.eq(condition, Article::getCategoryId, categoryId)
+                .eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_PUBLISH)
+                .orderByDesc(Article::getIsTop);
+        // 分页查询
+        Page<Article> articlePage = new Page<>(pageNum, pageSize);
         Page<Article> page = this.page(articlePage, articleQueryWrapper);
-        long total = page.getTotal();
         List<Article> articleList = page.getRecords();
+        // 封装分类名
         articleList.forEach(article -> {
             Category category = categoryService.getById(article.getCategoryId());
             article.setCategoryName(category.getName());
         });
+
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, ArticleListVo.class);
-        return new PageVo<>(articleListVos, total);
+        return new PageVo<>(articleListVos, page.getTotal());
     }
 
     @Override
@@ -125,6 +126,31 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .map(tagId -> new ArticleTag(newArticle.getId(), tagId))
                 .toList();
         return articleTagService.saveBatch(tags);
+    }
+
+    @Override
+    public PageVo<articleContentListVo> articleContentList(Integer pageNum,
+                                                           Integer pageSize,
+                                                           String title,
+                                                           String summary) {
+        // 创建查询条件
+        LambdaQueryWrapper<Article> articleQueryWrapper = new LambdaQueryWrapper<>();
+        articleQueryWrapper.like(StringUtils.hasText(title), Article::getTitle, title) // 标题模糊匹配
+                .like(StringUtils.hasText(summary), Article::getDescription, summary) // 摘要模糊匹配
+                .eq(Article::getStatus, SystemConstants.ARTICLE_STATUS_PUBLISH) // 状态为已发布
+                .orderByDesc(Article::getIsTop); // 置顶
+        // 分页查询
+        Page<Article> articlePage = new Page<>(pageNum, pageSize);
+        Page<Article> page = this.page(articlePage, articleQueryWrapper);
+        List<Article> articleList = page.getRecords();
+        // 获取分类名
+        articleList.forEach(article -> {
+            Category category = categoryService.getById(article.getCategoryId());
+            article.setCategoryName(category.getName());
+        });
+
+        List<articleContentListVo> articleListVos = BeanCopyUtils.copyBeanList(articleList, articleContentListVo.class);
+        return new PageVo<>(articleListVos, page.getTotal());
     }
 
 }
