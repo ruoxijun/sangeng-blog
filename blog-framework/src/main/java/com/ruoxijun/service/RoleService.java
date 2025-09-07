@@ -2,6 +2,7 @@ package com.ruoxijun.service;
 
 import com.ruoxijun.domain.entity.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ruoxijun.domain.vo.PageVo;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
 public interface RoleService extends IService<Role> {
 
     List<String> getRoleKeysByUserId(Long id);
+
+    PageVo<Role> roleList(Integer pageNum, Integer pageSize, String roleName, Integer status);
 }

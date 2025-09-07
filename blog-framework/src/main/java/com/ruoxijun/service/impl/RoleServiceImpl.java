@@ -1,13 +1,18 @@
 package com.ruoxijun.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.entity.Role;
+import com.ruoxijun.domain.vo.PageVo;
 import com.ruoxijun.service.RoleService;
 import com.ruoxijun.mapper.RoleMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.ruoxijun.constants.SystemConstants.ADMIN_KEY;
 
@@ -32,6 +37,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
             return List.of(ADMIN_KEY);
         }
         return this.baseMapper.selectRoleKeysByUserId(id);
+    }
+
+    @Override
+    public PageVo<Role> roleList(Integer pageNum, Integer pageSize, String roleName, Integer status) {
+        LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.hasText(roleName), Role::getRoleName, roleName) // 角色名称
+                .eq(Objects.nonNull(status), Role::getStatus, status) // 角色状态
+                .orderByAsc(Role::getRoleSort);
+        Page<Role> page = new Page<>(pageNum, pageSize);
+        Page<Role> rolePage = this.page(page, queryWrapper);
+        return new PageVo<>(rolePage.getRecords(), rolePage.getTotal());
     }
 
 }

@@ -2,7 +2,6 @@ package com.ruoxijun.controller;
 
 import com.ruoxijun.domain.R;
 import com.ruoxijun.domain.entity.Menu;
-import com.ruoxijun.domain.vo.MenuVo;
 import com.ruoxijun.service.MenuService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
