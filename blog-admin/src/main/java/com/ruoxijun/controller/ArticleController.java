@@ -74,4 +74,15 @@ public class ArticleController {
         return R.ok(articleService.updateArticle(article));
     }
 
+    /**
+     * 删除文章
+     *
+     * @param id 文章id
+     * @return 删除成功
+     */
+    @DeleteMapping("/{id}")
+    public R<Boolean> deleteArticle(@PathVariable Long id) {
+        return R.ok(articleService.removeById(id));
+    }
+
 }
