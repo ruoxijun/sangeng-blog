@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoxijun.constants.SystemConstants;
 import com.ruoxijun.domain.dto.RoleDto;
+import com.ruoxijun.domain.dto.UpdateRoleDto;
 import com.ruoxijun.domain.entity.Role;
 import com.ruoxijun.domain.entity.RoleMenu;
 import com.ruoxijun.domain.vo.MenuVo;
@@ -84,6 +85,22 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
                 .map(RoleMenu::getMenuId)
                 .toList();
         return new RoleMenuTreeSelectVo(menuVos, checkedKeys);
+    }
+
+    @Transactional
+    @Override
+    public boolean updateRole(UpdateRoleDto role) {
+        // 更新角色信息
+        this.save(BeanCopyUtils.copyBean(role, Role.class));
+        // 删除角色权限信息
+        LambdaQueryWrapper<RoleMenu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RoleMenu::getRoleId, role.getId());
+        roleMenuService.remove(queryWrapper);
+        // 添加角色权限信息
+        List<RoleMenu> roleMenuList = role.getMenuIds().stream()
+                .map(menuId -> new RoleMenu(role.getId(), menuId))
+                .toList();
+        return roleMenuService.saveBatch(roleMenuList);
     }
 
 }

@@ -91,11 +91,15 @@ public class RoleController {
         return R.ok(roleService.roleMenuTreeSelect(id));
     }
 
+    /**
+     * 修改角色
+     *
+     * @param role 角色
+     * @return 修改结果
+     */
     @PutMapping
     public R<Boolean> updateRole(@RequestBody UpdateRoleDto role) {
-        return R.ok(
-                roleService.save(BeanCopyUtils.copyBean(role, Role.class))
-        );
+        return R.ok(roleService.updateRole(role));
     }
 
 }
