@@ -29,8 +29,10 @@ public class UploadServiceImpl implements UploadService {
         String datePath = sdf.format(System.currentTimeMillis());
         String filePath = datePath + JwtUtils.getUUID() + suffix;
         File file = new File(path + filePath);
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
         image.transferTo(file);
-        // todo 静态资源映射待完善
         return filePath;
     }
 

@@ -42,6 +42,7 @@ public class SecurityConfiguration {
                         auth.requestMatchers("/login").anonymous()
                                 // springdoc-openapi 接口文档地址：http://localhost:8888/swagger-ui/index.html
                                 .requestMatchers(
+                                        "/static/**",
                                         "/v3/api-docs/**",
                                         "/swagger-ui/**"
                                 ).anonymous()
