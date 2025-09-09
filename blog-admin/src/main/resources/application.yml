@@ -2,6 +2,11 @@ server:
   port: 8888
 
 spring:
+  web:
+    resources:
+      static-locations: file:${upload.path} # 指定静态资源文件夹
+  mvc:
+    static-path-pattern: /static/** # 静态资源映射
   datasource:
     url: jdbc:mysql://localhost:3306/sangeng_blog?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
