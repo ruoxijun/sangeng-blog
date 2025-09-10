@@ -5,8 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
+/**
+ * 自定义注解
+ */
+@Target(ElementType.METHOD) // 方法级别
+@Retention(RetentionPolicy.RUNTIME) // 运行时
 public @interface SystemLog {
 
     String value() default "";
