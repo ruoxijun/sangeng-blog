@@ -18,6 +18,17 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    /**
+     * 跨域配置
+     * <p>
+     * 使用 addCorsMappings 方法添加跨域配置：
+     * 和 Spring Security 集成更自然，减少冲突
+     * <p>
+     * public CorsFilter corsFilter() 注册 bean 方式：
+     * 更底层，拦截范围广，但可能影响 Security 过滤器链
+     *
+     * @param registry 跨域注册
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         // 设置允许跨域的路径
