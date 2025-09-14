@@ -6,6 +6,9 @@ import jakarta.annotation.Resource;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+/**
+ * 启动时更新文章浏览量
+ */
 @Component
 public class ViewCountRunner implements CommandLineRunner {
 
