@@ -51,6 +51,8 @@
 ### lombok 插件配置
 
 > [参考地址](https://juejin.cn/post/7377230203153727498#heading-9)
+> 
+> [MapStructPlus 官方文档地址](https://www.mapstruct.plus/guide/faq.html#%E4%B8%8E-lombok-%E6%95%B4%E5%90%88)
 
 ```xml
 <annotationProcessorPaths>
