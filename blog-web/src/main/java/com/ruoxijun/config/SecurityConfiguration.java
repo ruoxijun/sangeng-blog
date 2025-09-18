@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,25 +40,30 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/login").anonymous()
+                        auth.requestMatchers(
+                                        "/login", "/static/**"
+                                ).anonymous()
                                 // springdoc-openapi 接口文档地址：http://localhost:8888/swagger-ui/index.html
                                 .requestMatchers(
-                                        "/static/**",
-                                        "/v3/api-docs/**",
-                                        "/swagger-ui/**"
+                                        "/v3/api-docs/**", "/swagger-ui/**"
                                 ).anonymous()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(conf ->
                         conf.authenticationEntryPoint(authenticationEntryPoint)
-                                .accessDeniedHandler(accessDeniedHandler)
-                )
+                                .accessDeniedHandler(accessDeniedHandler))
+                // 禁用缓存头，允许同源 iframe
+                .headers(headersCustomizer ->
+                        headersCustomizer.cacheControl(HeadersConfigurer.CacheControlConfig::disable)
+                                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .logout(AbstractHttpConfigurer::disable)
+                // 禁用跨域，不做任何跨域处理
                 .cors(AbstractHttpConfigurer::disable)
+                // CSRF 禁用，因为不使用 session
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(conf ->
-                        conf.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                // 不需要 session
+                .sessionManagement(conf -> conf.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 
