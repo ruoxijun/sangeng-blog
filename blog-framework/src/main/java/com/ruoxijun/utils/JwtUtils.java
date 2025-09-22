@@ -41,7 +41,6 @@ public class JwtUtils {
      * @return jwt
      */
     private static JwtBuilder getJwtBuilder(String subject, Long ttlMillis, String uuid) {
-        MacAlgorithm hs256 = Jwts.SIG.HS256;
         SecretKey secretKey = generalKey();
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
@@ -55,7 +54,7 @@ public class JwtUtils {
                 .subject(subject) // 主题可以是JSON数据
                 .issuer(JWT_ISSUER) // 签发者
                 .issuedAt(now) // 签发时间
-                .signWith(secretKey, hs256) //使用HS256对称加密算法签名, 第二个参数为秘钥
+                .signWith(secretKey, Jwts.SIG.HS256) //使用HS256对称加密算法签名
                 .expiration(expDate);
     }
 
