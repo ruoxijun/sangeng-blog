@@ -19,14 +19,29 @@ import java.lang.reflect.Method;
  * 日志切面
  */
 @Slf4j
-@Aspect
+@Aspect // 标注切面
 @Component
 public class LogAspect {
 
+    /**
+     * 定义切点，匹配所有带有 @SystemLog 注解的方法
+     * 这个方法只是个占位符，用来给切点表达式起个名字，方便切点复用
+     */
     @Pointcut("@annotation(com.ruoxijun.annotation.SystemLog)")
     public void logPointCut() {
     }
 
+    /**
+     * 环绕通知
+     * <p>
+     * 使用如下方式效果相关
+     * // @Around("@annotation(systemLog)")
+     * // public Object around(ProceedingJoinPoint joinPoint, SystemLog systemLog)
+     *
+     * @param joinPoint ProceedingJoinPoint 环绕通知专用参数
+     * @return 返回值
+     * @throws Throwable 抛出的异常
+     */
     @Around("logPointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
