@@ -16,6 +16,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * 已认证但没有该资源的访问权限（authenticated but forbidden）
+ * <p>
+ * forbidden 403
+ */
 @Slf4j
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
