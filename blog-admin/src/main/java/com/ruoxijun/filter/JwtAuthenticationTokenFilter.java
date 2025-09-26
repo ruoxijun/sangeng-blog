@@ -40,14 +40,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        if (!authorization.startsWith("Bearer ")) {
-            unauthorizedResponse(response);
-            return;
-        }
-        String token = authorization.substring(7);
         // 2. 解析 token
         String userId = null;
         try {
+            String token = authorization.substring(7);
             Claims jwt = JwtUtils.parseJWT(token);
             userId = jwt.getSubject();
         } catch (Exception e) {
