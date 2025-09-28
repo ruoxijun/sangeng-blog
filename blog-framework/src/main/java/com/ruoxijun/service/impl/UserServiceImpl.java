@@ -20,6 +20,8 @@ import com.ruoxijun.mapper.UserMapper;
 import com.ruoxijun.utils.BeanCopyUtils;
 import com.ruoxijun.utils.SecurityUtils;
 import jakarta.annotation.Resource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -44,6 +46,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserRoleService userRoleService;
     @Resource
     private RoleService roleService;
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserInfoVo userInfo() {
@@ -68,7 +72,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public UserInfoVo register(User user) {
         User u = new User();
         u.setUserName(user.getUserName());
-        u.setPassword(user.getPassword());
+        u.setPassword(passwordEncoder.encode(user.getPassword()));
         u.setNickName(user.getNickName());
         u.setEmail(user.getEmail());
         userMapper.insert(u);
