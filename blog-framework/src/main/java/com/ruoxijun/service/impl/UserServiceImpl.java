@@ -99,6 +99,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public UserInfoVo addUser(UserDto user) {
         // 添加用户
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User newUser = BeanCopyUtils.copyBean(user, User.class);
         this.save(newUser);
         // 添加用户角色
